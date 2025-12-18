@@ -18,7 +18,7 @@ const getJobs = async (req, res) => {
     res.status(200).json({
       success: true,
       count: jobs.length,
-      data: jobs,
+      jobs,
     });
   } catch (e) {
     console.log(e);

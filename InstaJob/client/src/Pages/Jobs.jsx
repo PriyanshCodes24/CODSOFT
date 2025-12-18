@@ -1,50 +1,15 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
 import { useSearchParams } from "react-router-dom";
 
 const Jobs = () => {
-  const jobList = [
-    {
-      id: 1,
-      title: "Development",
-      location: "Kadi",
-    },
-    {
-      id: 2,
-      title: "Development",
-      location: "Kadi",
-    },
-    {
-      id: 3,
-      title: "DevOps",
-      location: "Kadi",
-    },
-    {
-      id: 4,
-      title: "Design",
-      location: "Ahmedabad",
-    },
-    {
-      id: 5,
-      title: "Marketing",
-      location: "Ahmedabad",
-    },
-    {
-      id: 6,
-      title: "Data",
-      location: "Gandhinagar",
-    },
-    {
-      id: 7,
-      title: "Product",
-      location: "Gandhinagar",
-    },
-  ];
-
+  const [jobList, setJobList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = useState(searchParams.get("q") || "");
   const [location, setLocation] = useState(searchParams.get("loc") || "");
-  const [filteredList, SetFilteredList] = useState(jobList);
+  const API = import.meta.env.VITE_URI;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,20 +31,20 @@ const Jobs = () => {
     setSearchParams(params);
   };
 
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams);
+  const getJobs = async () => {
+    try {
+      const response = await axios.get(
+        `${API}/jobs?${searchParams.toString()}`
+      );
+      setJobList(response.data.jobs);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
 
-    SetFilteredList(
-      jobList.filter(
-        (job) =>
-          job.title
-            .toLowerCase()
-            .includes((params.get("q") || "").toLowerCase()) &&
-          job.location
-            .toLowerCase()
-            .includes((params.get("loc") || "").toLowerCase())
-      )
-    );
+  useEffect(() => {
+    getJobs();
   }, [searchParams]);
 
   useEffect(() => {
@@ -111,7 +76,7 @@ const Jobs = () => {
             type="text"
             aria-label="Job Title"
             name="q"
-            className="border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 flex-1 min-w-0 w-full"
+            className="focus:outline-none border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 flex-1 min-w-0 w-full"
             placeholder="Job Title"
             value={title}
             onChange={handleTitle}
@@ -121,7 +86,7 @@ const Jobs = () => {
             type="text"
             aria-label="Job Location"
             name="loc"
-            className="border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 w-full sm:w-40"
+            className="focus:outline-none border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 w-full sm:w-40"
             placeholder="Job Location"
             value={location}
             onChange={handleLocation}
@@ -137,9 +102,9 @@ const Jobs = () => {
       </div>
 
       <div id="jobs-list" className="grid grid-cols-1 gap-4">
-        {filteredList.length !== 0 ? (
-          filteredList.map((job) => (
-            <div key={job.id} className="border rounded p-4 text-gray-600">
+        {jobList.length !== 0 ? (
+          jobList.map((job) => (
+            <div key={job._id} className="border rounded p-4 text-gray-600">
               <p>
                 <b>Title</b> : {job.title}
               </p>
