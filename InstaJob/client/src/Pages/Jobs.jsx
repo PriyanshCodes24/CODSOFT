@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import Loading from "../Components/Loader";
 
 const Jobs = () => {
@@ -12,6 +12,7 @@ const Jobs = () => {
   const [location, setLocation] = useState(searchParams.get("loc") || "");
   const API = import.meta.env.VITE_API;
   const [searchLoading, setSearchLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     try {
@@ -121,14 +122,18 @@ const Jobs = () => {
         <div id="jobs-list" className="grid grid-cols-1 gap-4">
           {jobList.length !== 0 ? (
             jobList.map((job) => (
-              <div key={job._id} className="border rounded p-4 text-gray-600">
+              <Link
+                to={`/jobs/${job._id}`}
+                key={job._id}
+                className="border border-[#5e503f48] shadow-sm rounded-md p-4 text-gray-600 cursor-pointer hover:shadow-md"
+              >
                 <p>
                   <b>Title</b> : {job.title}
                 </p>
                 <p>
                   <b>Location</b> : {job.location}
                 </p>
-              </div>
+              </Link>
             ))
           ) : (
             <h1 className="font-bold text-2xl text-center rounded p-4 text-gray-600">

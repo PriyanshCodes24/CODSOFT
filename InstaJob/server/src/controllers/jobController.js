@@ -34,7 +34,9 @@ const getJobDetails = async (req, res) => {
     const { id } = req.params;
     const jobDetails = await Job.findById(id);
     if (!jobDetails) {
-      return res.status(404).json({ message: "Job details not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Job details not found" });
     }
     res.status(200).json({ success: true, jobDetails });
   } catch (error) {
