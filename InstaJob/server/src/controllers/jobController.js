@@ -29,4 +29,21 @@ const getJobs = async (req, res) => {
   }
 };
 
-module.exports = { getJobs };
+const getJobDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const jobDetails = await Job.findById(id);
+    if (!jobDetails) {
+      return res.status(404).json({ message: "Job details not found" });
+    }
+    res.status(200).json({ success: true, jobDetails });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "failed to fetch job details",
+    });
+  }
+};
+
+module.exports = { getJobs, getJobDetails };

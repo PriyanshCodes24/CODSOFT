@@ -10,7 +10,7 @@ const Jobs = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = useState(searchParams.get("q") || "");
   const [location, setLocation] = useState(searchParams.get("loc") || "");
-  const API = import.meta.env.VITE_URI;
+  const API = import.meta.env.VITE_API;
   const [searchLoading, setSearchLoading] = useState(false);
 
   const handleSubmit = (e) => {
