@@ -48,4 +48,37 @@ const getJobDetails = async (req, res) => {
   }
 };
 
-module.exports = { getJobs, getJobDetails };
+const postJob = async (req, res) => {
+  try {
+    const { title, location, company, type, description } = req.body;
+
+    if (!title) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Enter the title" });
+    }
+    if (!location) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Enter the location" });
+    }
+    if (!company) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Enter the company" });
+    }
+
+    await Job.create({ title, location, company, type, description });
+    console.log("Job inserted successfully");
+    res
+      .status(201)
+      .json({ success: true, message: "Job inserted successfully" });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Job couldn't be inserted" });
+  }
+};
+
+module.exports = { getJobs, getJobDetails, postJob };

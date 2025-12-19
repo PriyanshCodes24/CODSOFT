@@ -6,13 +6,6 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-end bg-[#22333B] text-white gap-2 sm:gap-4 md:gap-6 p-4">
-      {/* <img
-      src="client\public\2.png"
-        className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
-          location.pathname === "/" && "font-bold"
-        }`}
-        onClick={() => navigate("/")}
-      /> */}
       <div
         className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
           location.pathname === "/" && "font-bold"
@@ -31,11 +24,11 @@ const Navbar = () => {
       </div>
       <div
         className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
-          location.pathname === "/form" && "font-bold"
+          location.pathname === "/post" && "font-bold"
         }`}
-        onClick={() => navigate("/form")}
+        onClick={() => navigate("/post")}
       >
-        Form
+        Post
       </div>
       <div
         className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
