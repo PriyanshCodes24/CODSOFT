@@ -46,14 +46,14 @@ const Navbar = () => {
       >
         Login
       </div>
-      {/* <div
+      <div
         className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
           location.pathname === "/register" && "font-bold"
         }`}
         onClick={() => navigate("/register")}
       >
         Register
-      </div> */}
+      </div>
     </div>
   );
 };
