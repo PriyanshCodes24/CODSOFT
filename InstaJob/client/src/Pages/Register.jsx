@@ -24,7 +24,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      setIsLoading(true);
 
       if (!name || name == "") {
         return toast.error("Please enter a name");
@@ -35,6 +34,7 @@ const Register = () => {
       if (!password || password == "") {
         return toast.error("Please enter an password");
       }
+      setIsLoading(true);
 
       const payload = {
         name,
