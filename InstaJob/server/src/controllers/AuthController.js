@@ -2,6 +2,56 @@ const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
+const register = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    if (!name) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please enter the name" });
+    }
+    if (!email) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please enter the email" });
+    }
+    const cleanEmail = email.toLowerCase().trim();
+    if (!password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please enter the password" });
+    }
+
+    const existingUser = await User.findOne({ email: cleanEmail });
+
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: "User with this email already exists",
+      });
+    }
+
+    const encryptedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      name,
+      email: cleanEmail,
+      password: encryptedPassword,
+    });
+
+    const { password: _, ...safeUser } = user._doc;
+    console.log("User registerd successfully:", safeUser);
+
+    res.status(201).json({
+      success: true,
+      user: safeUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Registration failed" });
+  }
+};
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -57,54 +107,27 @@ const login = async (req, res) => {
   }
 };
 
-const register = async (req, res) => {
+const getUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Please enter the name" });
-    }
-    if (!email) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Please enter the email" });
-    }
-    const cleanEmail = email.toLowerCase().trim();
-    if (!password) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Please enter the password" });
-    }
+    const user = await User.findById(req.user.id).select("-password");
 
-    const existingUser = await User.findOne({ email: cleanEmail });
-
-    if (existingUser) {
-      return res.status(409).json({
+    if (!user) {
+      return res.status(404).json({
         success: false,
-        message: "User with this email already exists",
+        message: "User not found",
       });
     }
 
-    const encryptedPassword = await bcrypt.hash(password, 10);
-
-    const user = await User.create({
-      name,
-      email: cleanEmail,
-      password: encryptedPassword,
-    });
-
-    const { password: _, ...safeUser } = user._doc;
-    console.log("User registerd successfully:", safeUser);
-
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      user: safeUser,
+      user,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "Registration failed" });
+    res
+      .status(500)
+      .json({ success: false, message: "Couldn't fetch the user datails" });
   }
 };
 
-module.exports = { login, register };
+module.exports = { login, register, getUser };

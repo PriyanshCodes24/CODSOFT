@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { user, logout } = useAuth();
+  useEffect(() => {}, []);
 
   return (
     <div className="flex justify-end bg-[#22333B] text-white gap-2 sm:gap-4 md:gap-6 p-4">
@@ -22,14 +27,16 @@ const Navbar = () => {
       >
         Dashboard
       </div>
-      <div
-        className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
-          location.pathname === "/post" && "font-bold"
-        }`}
-        onClick={() => navigate("/post")}
-      >
-        Post
-      </div>
+      {user?.role === "recruiter" && (
+        <div
+          className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
+            location.pathname === "/post" && "font-bold"
+          }`}
+          onClick={() => navigate("/post")}
+        >
+          Post
+        </div>
+      )}
       <div
         className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
           location.pathname === "/jobs" && "font-bold"
@@ -38,22 +45,39 @@ const Navbar = () => {
       >
         Jobs
       </div>
-      <div
-        className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
-          location.pathname === "/login" && "font-bold"
-        }`}
-        onClick={() => navigate("/login")}
-      >
-        Login
-      </div>
-      <div
-        className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
-          location.pathname === "/register" && "font-bold"
-        }`}
-        onClick={() => navigate("/register")}
-      >
-        Register
-      </div>
+      {!user && (
+        <div
+          className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
+            location.pathname === "/login" && "font-bold"
+          }`}
+          onClick={() => navigate("/login")}
+        >
+          Login
+        </div>
+      )}
+      {!user && (
+        <div
+          className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
+            location.pathname === "/register" && "font-bold"
+          }`}
+          onClick={() => navigate("/register")}
+        >
+          Register
+        </div>
+      )}
+      {user && (
+        <div
+          className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
+            location.pathname === "/logout" && "font-bold"
+          }`}
+          onClick={() => {
+            logout();
+            navigate("/login");
+          }}
+        >
+          Logout
+        </div>
+      )}
     </div>
   );
 };

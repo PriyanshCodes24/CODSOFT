@@ -3,12 +3,14 @@ import toast from "react-hot-toast";
 import Loader from "../Components/Loader";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { useAuth } from "../Context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -37,6 +39,7 @@ const Login = () => {
 
       localStorage.setItem("token", response.data.token);
 
+      await login();
       toast.success("User Logged In successfully");
       navigate("/jobs");
     } catch (error) {
