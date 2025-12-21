@@ -9,6 +9,7 @@ import JobDetails from "./Pages/JobDetails";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 const App = () => {
   return (
@@ -18,11 +19,13 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/employer-dashboard" element={<EmployerDashboard />} />
           <Route path="/candidate-dashboard" element={<CandidateDashboard />} />
-          <Route path="/post" element={<Post />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/jobs/:id" element={<JobDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/post" element={<Post />} />
+          </Route>
         </Route>
       </Routes>
       <Toaster position="top-left" />
