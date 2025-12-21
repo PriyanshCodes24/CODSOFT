@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 const Post = () => {
   const [title, setTitle] = useState("");
@@ -9,7 +9,6 @@ const Post = () => {
   const typeOptions = ["Full-time", "Internship", "Remote"];
   const [type, setType] = useState("Full-time");
   const [description, setDescription] = useState("");
-  const API = import.meta.env.VITE_API;
   const navigate = useNavigate();
 
   const handleTitleChange = (e) => {
@@ -39,7 +38,7 @@ const Post = () => {
         description,
       };
 
-      const response = await axios.post(`${API}/jobs`, payload);
+      const response = await api.post(`/jobs`, payload);
       console.log(response);
       navigate("/jobs");
     } catch (error) {

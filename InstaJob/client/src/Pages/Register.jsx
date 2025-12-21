@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Loader from "../Components/Loader";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 const Register = () => {
   const API = import.meta.env.VITE_API;
@@ -41,7 +41,7 @@ const Register = () => {
         email,
         password,
       };
-      const response = await axios.post(`${API}/auth/register`, payload);
+      const response = await api.post(`/auth/register`, payload);
       console.log(response.data);
 
       toast.success("User Registered successfully");

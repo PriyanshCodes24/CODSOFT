@@ -1,11 +1,10 @@
-import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Loader from "../Components/Loader";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 const Login = () => {
-  const API = import.meta.env.VITE_API;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +32,7 @@ const Login = () => {
         email,
         password,
       };
-      const response = await axios.post(`${API}/auth/login`, payload);
+      const response = await api.post(`/auth/login`, payload);
       console.log(response.data);
 
       localStorage.setItem("token", response.data.token);

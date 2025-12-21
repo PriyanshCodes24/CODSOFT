@@ -1,11 +1,10 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import api from "../api/axios";
 
 const JobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
-  const API = import.meta.env.VITE_API;
   const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -13,7 +12,7 @@ const JobDetails = () => {
   const getJobDetails = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(`${API}/jobs/${params.id}`);
+      const response = await api.get(`/jobs/${params.id}`);
       setJobDetails(response.data.jobDetails);
     } catch (error) {
       console.log(error);

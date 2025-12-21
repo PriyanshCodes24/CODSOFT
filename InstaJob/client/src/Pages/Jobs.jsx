@@ -1,18 +1,16 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSearch } from "react-icons/fa";
-import { useSearchParams, useNavigate, Link } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import Loading from "../Components/Loader";
+import api from "../api/axios";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = useState(searchParams.get("q") || "");
   const [location, setLocation] = useState(searchParams.get("loc") || "");
-  const API = import.meta.env.VITE_API;
   const [searchLoading, setSearchLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     try {
@@ -43,9 +41,7 @@ const Jobs = () => {
     try {
       setSearchLoading(true);
 
-      const response = await axios.get(
-        `${API}/jobs?${searchParams.toString()}`
-      );
+      const response = await api.get(`/jobs?${searchParams.toString()}`);
       setJobList(response.data.jobs);
     } catch (error) {
       console.log(error);
