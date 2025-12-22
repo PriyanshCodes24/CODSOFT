@@ -7,7 +7,7 @@ const protected = (req, res, next) => {
     if (!header || !header.startsWith("Bearer ")) {
       return res.status(401).json({
         success: false,
-        message: "Not authorized,token missing",
+        message: "Not authorized,token missing. Login to continue",
       });
     }
 
@@ -19,9 +19,10 @@ const protected = (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({ success: false, message: "Not authorized,token invalid" });
+    res.status(500).json({
+      success: false,
+      message: "Not authorized,token invalid. Login to continue",
+    });
   }
 };
 

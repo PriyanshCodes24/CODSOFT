@@ -9,7 +9,9 @@ import JobDetails from "./Pages/JobDetails";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
 import { Toaster } from "react-hot-toast";
-import ProtectedRoute from "./Components/ProtectedRoute";
+import ProtectedRoute, {
+  RoleProtectedRoute,
+} from "./Components/ProtectedRoute";
 
 const App = () => {
   return (
@@ -24,7 +26,13 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/post" element={<Post />} />
+            <Route
+              element={
+                <RoleProtectedRoute allowedRoles={["recruiter", "admin"]} />
+              }
+            >
+              <Route path="/post" element={<Post />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

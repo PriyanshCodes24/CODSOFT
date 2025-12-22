@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import api from "../api/axios";
+import toast from "react-hot-toast";
 
 const JobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -25,9 +26,19 @@ const JobDetails = () => {
     getJobDetails();
   }, [params.id]);
 
+  const handleApply = async () => {
+    try {
+      await api.post(`/apply/${params.id}`);
+      toast.success("Applied successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message || "Failed to apply");
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#EAE0D5] text-[#5E503F] ">
-      <div className="shadow-xl rounded-xl">
+      <div className="shadow-xl rounded-xl p-4 w-2xs lg:w-lg">
         <div className="flex cursor-pointer" onClick={() => navigate(-1)}>
           {<IoIosArrowBack className="translate-1" />}Back
         </div>
@@ -39,13 +50,31 @@ const JobDetails = () => {
             <h2>Job not Found</h2>
           ) : (
             <ul className="space-y-4">
-              <li>Company : {jobDetails.company}</li>
-              <li>Title : {jobDetails.title}</li>
-              <li>Location : {jobDetails.location}</li>
-              <li>Description : {jobDetails.description}</li>
-              <li>Type : {jobDetails.type}</li>
+              <li>
+                <b>Company :</b> {jobDetails.company}
+              </li>
+              <li>
+                <b>Title :</b> {jobDetails.title}
+              </li>
+              <li>
+                <b>Location :</b> {jobDetails.location}
+              </li>
+              <li>
+                <b>Description :</b> {jobDetails.description}
+              </li>
+              <li>
+                <b>Type :</b> {jobDetails.type}
+              </li>
             </ul>
           )}
+          <div className="flex justify-center mt-4">
+            <button
+              className="mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white cursor-pointer border-0 rounded-md px-8 py-2"
+              onClick={handleApply}
+            >
+              Apply
+            </button>
+          </div>
         </div>
       </div>
     </div>
