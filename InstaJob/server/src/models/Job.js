@@ -27,6 +27,11 @@ const jobSchema = new mongoose.Schema(
       type: String,
       trimmed: true,
     },
+    postedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,

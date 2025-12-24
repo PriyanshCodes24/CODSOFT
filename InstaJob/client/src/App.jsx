@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
-import EmployerDashboard from "./Pages/EmployerDashboard";
-import CandidateDashboard from "./Pages/CandidateDashboard";
+import RecruiterDashboard from "./Pages/RecruiterDashboard";
+import ApplicantDashboard from "./Pages/ApplicantDashboard";
 import Post from "./Pages/Post";
 import Layout from "./Layout";
 import Jobs from "./Pages/Jobs";
@@ -19,8 +19,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/employer-dashboard" element={<EmployerDashboard />} />
-          <Route path="/candidate-dashboard" element={<CandidateDashboard />} />
+          <Route path="/applicant-dashboard" element={<ApplicantDashboard />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/jobs/:id" element={<JobDetails />} />
           <Route path="/login" element={<Login />} />
@@ -32,6 +31,14 @@ const App = () => {
               }
             >
               <Route path="/post" element={<Post />} />
+            </Route>
+            <Route
+              element={<RoleProtectedRoute allowedRoles={["recruiter"]} />}
+            >
+              <Route
+                path="/recruiter-dashboard"
+                element={<RecruiterDashboard />}
+              />
             </Route>
           </Route>
         </Route>

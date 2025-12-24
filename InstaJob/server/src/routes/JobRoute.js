@@ -7,10 +7,12 @@ const {
   getJobs,
   getJobDetails,
   postJob,
+  getMyJobs,
 } = require("../controllers/jobController");
 
 router.get("/", getJobs);
-router.get("/:id", getJobDetails);
-router.post("/", protected,authorize('recruiter','admin'), postJob);
+router.get("/get/:id", getJobDetails);
+router.get("/my-jobs", protected, authorize("recruiter"), getMyJobs);
+router.post("/", protected, authorize("recruiter", "admin"), postJob);
 
 module.exports = router;

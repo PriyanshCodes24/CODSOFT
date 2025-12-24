@@ -68,7 +68,14 @@ const postJob = async (req, res) => {
         .json({ success: false, message: "Enter the company" });
     }
 
-    await Job.create({ title, location, company, type, description });
+    await Job.create({
+      title,
+      location,
+      company,
+      type,
+      description,
+      postedBy: req.user.id,
+    });
     console.log("Job inserted successfully");
     res
       .status(201)
@@ -81,4 +88,20 @@ const postJob = async (req, res) => {
   }
 };
 
-module.exports = { getJobs, getJobDetails, postJob };
+const getMyJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({ postedBy: req.user.id });
+
+    res.status(200).json({
+      success: true,
+      jobs,
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to fetch recruiter jobs" });
+  }
+};
+
+module.exports = { getJobs, getJobDetails, postJob, getMyJobs };

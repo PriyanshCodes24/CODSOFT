@@ -19,14 +19,26 @@ const Navbar = () => {
       >
         Home
       </div>
-      <div
-        className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
-          location.pathname === "/candidate-dashboard" && "font-bold"
-        }`}
-        onClick={() => navigate("/candidate-dashboard")}
-      >
-        Dashboard
-      </div>
+      {user?.role === "applicant" && (
+        <div
+          className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
+            location.pathname === "/applicant-dashboard" && "font-bold"
+          }`}
+          onClick={() => navigate("/applicant-dashboard")}
+        >
+          Dashboard
+        </div>
+      )}
+      {user?.role === "recruiter" && (
+        <div
+          className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
+            location.pathname === "/recruiter-dashboard" && "font-bold"
+          }`}
+          onClick={() => navigate("/recruiter-dashboard")}
+        >
+          Dashboard
+        </div>
+      )}
       {user?.role === "recruiter" && (
         <div
           className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
