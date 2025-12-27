@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import ProtectedRoute, {
   RoleProtectedRoute,
 } from "./Components/ProtectedRoute";
+import RecruiterJobDetails from "./Pages/RecruiterJobDetails";
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/applicant-dashboard" element={<ApplicantDashboard />} />
+          <Route path="/applicant/dashboard" element={<ApplicantDashboard />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/jobs/:id" element={<JobDetails />} />
           <Route path="/login" element={<Login />} />
@@ -36,8 +37,12 @@ const App = () => {
               element={<RoleProtectedRoute allowedRoles={["recruiter"]} />}
             >
               <Route
-                path="/recruiter-dashboard"
+                path="/recruiter/dashboard"
                 element={<RecruiterDashboard />}
+              />
+              <Route
+                path="/recruiter/jobs/:id"
+                element={<RecruiterJobDetails />}
               />
             </Route>
           </Route>

@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/jobs/", require("./src/routes/JobRoute"));
 app.use("/api/auth/", require("./src/routes/AuthRoute"));
-app.use("/api/apply/", require("./src/routes/ApplicationRoute"));
+app.use("/api/applications/", require("./src/routes/ApplicationRoute"));
 app.use(morgan("dev"));
 
 app.listen(PORT, async () => {

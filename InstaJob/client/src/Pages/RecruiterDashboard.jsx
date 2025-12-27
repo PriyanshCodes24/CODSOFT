@@ -25,7 +25,7 @@ const RecruiterDashboard = () => {
         <div className="grid grid-cols-1 gap-4">
           {jobs.map((job) => (
             <Link
-              to={`/jobs/${job._id}`}
+              to={`/recruiter/jobs/${job._id}`}
               key={job._id}
               className="border border-[#5e503f48] shadow-sm rounded-md p-4 text-gray-600 cursor-pointer hover:shadow-md"
             >

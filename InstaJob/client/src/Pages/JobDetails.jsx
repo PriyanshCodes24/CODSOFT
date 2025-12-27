@@ -33,7 +33,7 @@ const JobDetails = () => {
   const handleApply = async () => {
     try {
       setApplyLoading(true);
-      await api.post(`/apply/${params.id}`);
+      await api.post(`/applications/${params.id}`);
       setHasApplied(true);
       toast.success("Applied successfully");
     } catch (error) {

@@ -1,79 +1,63 @@
 const mongoose = require("mongoose");
-const Job = require("../models/Job");
 require("dotenv").config();
 
-const jobs = [
-  {
-    title: "Frontend Developer",
-    location: "Ahmedabad",
-    company: "TechSpark",
-    type: "Full-time",
-    description: "Work with React and modern frontend tools.",
-  },
-  {
-    title: "Backend Developer",
-    location: "Remote",
-    company: "CloudNova",
-    type: "Full-time",
-    description: "Node.js, Express, MongoDB backend role.",
-  },
-  {
-    title: "React Intern",
-    location: "Gandhinagar",
-    company: "InnoLabs",
-    type: "Internship",
-    description: "Internship focused on React and UI development.",
-  },
-  {
-    title: "DevOps Engineer",
-    location: "Kadi",
-    company: "DeployHub",
-    type: "Full-time",
-    description: "CI/CD pipelines, Docker, AWS.",
-  },
-  {
-    title: "UI/UX Designer",
-    location: "Ahmedabad",
-    company: "Designify",
-    type: "Remote",
-    description: "Design modern and user-friendly interfaces.",
-  },
-  {
-    title: "Data Analyst",
-    location: "Gandhinagar",
-    company: "DataWorks",
-    type: "Full-time",
-    description: "Analyze data and generate insights.",
-  },
-  {
-    title: "Marketing Executive",
-    location: "Ahmedabad",
-    company: "GrowthX",
-    type: "Full-time",
-    description: "Digital marketing and campaign management.",
-  },
-  {
-    title: "Product Manager",
-    location: "Remote",
-    company: "BuildRight",
-    type: "Full-time",
-    description: "Own product roadmap and feature delivery.",
-  },
-];
+const Job = require("../models/Job");
 
-const seedJobs = async () => {
+const run = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    console.log("running");
+    console.log("MongoDB connected");
+
+    // await Job.deleteMany({});
+    // console.log("Old jobs deleted");
+
+    const recruiter1 = "694b826dc368c40a20261906"; // Priyansh
+    const recruiter2 = "6946b5a4686f1be72a37fedc"; // Pinko
+
+    const jobs = [
+      {
+        title: "Full-stack Developer",
+        location: "Remote",
+        company: "InstaJob",
+        type: "Full-time",
+        description:
+          "React + Tailwind, Node + MongoDb + Express developer needed",
+        postedBy: recruiter1,
+      },
+      {
+        title: "DevOps Engineer",
+        location: "Ahmedabad",
+        company: "InstaJob",
+        type: "Full-time",
+        description: "AWS + Docker + CI/CD",
+        postedBy: recruiter1,
+      },
+      {
+        title: "Frontend Developer",
+        location: "Remote",
+        company: "Pinko Labs",
+        type: "Remote",
+        description: "React + Tailwind developer needed",
+        postedBy: recruiter2,
+      },
+      {
+        title: "Backend Developer",
+        location: "Gandhinagar",
+        company: "Pinko Labs",
+        type: "Full-time",
+        description: "Node.js + MongoDB backend role",
+        postedBy: recruiter2,
+      },
+    ];
 
     await Job.insertMany(jobs);
     console.log("Jobs seeded successfully");
 
-    process.exit();
-  } catch (e) {
-    console.error("Seeding error: ", e);
+    process.exit(0);
+  } catch (error) {
+    console.error("Seeding failed:", error);
     process.exit(1);
   }
 };
 
-seedJobs();
+run();

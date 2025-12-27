@@ -1,4 +1,5 @@
 const Application = require("../models/Application");
+const Job = require("../models/Job");
 
 const applyJob = async (req, res) => {
   try {
@@ -30,4 +31,34 @@ const applyJob = async (req, res) => {
   }
 };
 
-module.exports = { applyJob };
+const getApplicationJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    const job = await Job.findOne({ _id: jobId, postedBy: req.user.id });
+
+    if (!job) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized access",
+      });
+    }
+
+    const applications = await Application.find({ job: jobId }).populate(
+      "applicant",
+      "name email"
+    );
+
+    res.status(200).json({
+      success: true,
+      applications,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(403).json({
+      success: false,
+      message: "Unauthorized access",
+    });
+  }
+};
+
+module.exports = { applyJob, getApplicationJob };
