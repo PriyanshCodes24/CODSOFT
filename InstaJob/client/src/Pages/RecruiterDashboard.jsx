@@ -22,6 +22,7 @@ const RecruiterDashboard = () => {
   return (
     <div className="min-h-screen bg-[#EAE0D5] text-[#5E503F]">
       <div className="max-w-6xl px-4 py-8 mx-auto">
+        <h1 className="text-center text-3xl mb-8 font-bold">Applications</h1>
         <div className="grid grid-cols-1 gap-4">
           {jobs.map((job) => (
             <Link

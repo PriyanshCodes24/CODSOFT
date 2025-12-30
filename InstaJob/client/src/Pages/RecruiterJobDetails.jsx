@@ -27,7 +27,9 @@ const RecruiterJobDetails = () => {
     const getApplications = async () => {
       try {
         setApplicationsLoading(true);
-        const response = await api.get(`/applications/get/${params.id}`);
+        const response = await api.get(
+          `/applications/recruiter/get/${params.id}`
+        );
         console.log(response);
 
         setApplications(response.data.applications);

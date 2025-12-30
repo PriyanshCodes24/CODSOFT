@@ -20,7 +20,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/applicant/dashboard" element={<ApplicantDashboard />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/jobs/:id" element={<JobDetails />} />
           <Route path="/login" element={<Login />} />
@@ -33,6 +32,16 @@ const App = () => {
             >
               <Route path="/post" element={<Post />} />
             </Route>
+
+            <Route
+              element={<RoleProtectedRoute allowedRoles={["applicant"]} />}
+            >
+              <Route
+                path="/applicant/dashboard"
+                element={<ApplicantDashboard />}
+              />
+            </Route>
+
             <Route
               element={<RoleProtectedRoute allowedRoles={["recruiter"]} />}
             >

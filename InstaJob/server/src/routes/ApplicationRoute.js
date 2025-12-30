@@ -5,11 +5,23 @@ const authorize = require("../Middleware/roleMiddleware");
 
 const {
   applyJob,
-  getApplicationJob,
+  getRecruiterApplicationJob,
   patchStatus,
+  getApplicantJobs,
 } = require("../controllers/ApplicationController");
 
-router.get("/get/:jobId", protected, authorize("recruiter"), getApplicationJob);
+router.get(
+  "/recruiter/get/:jobId",
+  protected,
+  authorize("recruiter"),
+  getRecruiterApplicationJob
+);
+router.get(
+  "/applicant/get",
+  protected,
+  authorize("applicant"),
+  getApplicantJobs
+);
 router.post("/:id", protected, authorize("applicant"), applyJob);
 router.patch(
   "/patch/:applicationId/:status",

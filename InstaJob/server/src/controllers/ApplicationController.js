@@ -31,7 +31,7 @@ const applyJob = async (req, res) => {
   }
 };
 
-const getApplicationJob = async (req, res) => {
+const getRecruiterApplicationJob = async (req, res) => {
   try {
     const { jobId } = req.params;
     const job = await Job.findOne({ _id: jobId, postedBy: req.user.id });
@@ -106,4 +106,28 @@ const patchStatus = async (req, res) => {
   }
 };
 
-module.exports = { applyJob, getApplicationJob, patchStatus };
+const getApplicantJobs = async (req, res) => {
+  try {
+    const applications = await Application.find({
+      applicant: req.user.id,
+    }).populate("job");
+
+    res.status(200).json({
+      success: true,
+      applications,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Could not fetch jobs",
+    });
+  }
+};
+
+module.exports = {
+  applyJob,
+  getRecruiterApplicationJob,
+  patchStatus,
+  getApplicantJobs,
+};
