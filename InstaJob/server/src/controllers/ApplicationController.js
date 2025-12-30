@@ -61,4 +61,49 @@ const getApplicationJob = async (req, res) => {
   }
 };
 
-module.exports = { applyJob, getApplicationJob };
+const patchStatus = async (req, res) => {
+  try {
+    const { applicationId, status } = req.params;
+    const application = await Application.findById(applicationId).populate(
+      "job"
+    );
+
+    if (!application) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No application found" });
+    }
+    if (application.job.postedBy.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to modify this application",
+      });
+    }
+
+    if (!["accepted", "rejected"].includes(status)) {
+      return res
+        .status(400)
+        .json({ success: false, message: `${status} is not a valid status` });
+    }
+    if (application.status === status) {
+      return res
+        .status(400)
+        .json({ success: false, message: `Application is already ${status}` });
+    }
+
+    application.status = status;
+    application.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Aplication ${application.status}`,
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to change the status" });
+  }
+};
+
+module.exports = { applyJob, getApplicationJob, patchStatus };

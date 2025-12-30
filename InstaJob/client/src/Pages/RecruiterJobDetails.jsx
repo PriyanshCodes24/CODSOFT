@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import api from "../api/axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -40,6 +41,17 @@ const RecruiterJobDetails = () => {
     getJobDetails();
     getApplications();
   }, []);
+
+  const changeStatus = async (status, id) => {
+    try {
+      const response = await api.patch(`applications/patch/${id}/${status}`);
+      console.log(response.data);
+      toast.success(response.data.message);
+    } catch (error) {
+      console.log(error);
+      toast.success(error.data.message || `application could not be ${status}`);
+    }
+  };
 
   const getDate = (mongoDate) => {
     const date = new Date(mongoDate);
@@ -123,6 +135,40 @@ const RecruiterJobDetails = () => {
                   <p>
                     <span>Date: </span> {getDate(application?.createdAt)}
                   </p>
+                  <p>
+                    <span>Status: </span>{" "}
+                    <span
+                      className={`${
+                        application.status === "accepted"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {application?.status}
+                    </span>
+                  </p>
+                  <div className="flex gap-x-2 mt-2">
+                    {application.status === "pending" && (
+                      <button
+                        onClick={() => {
+                          changeStatus("accepted", application._id);
+                        }}
+                        className="border-0 py-1 px-2 text-sm rounded-md bg-green-600 text-white cursor-pointer"
+                      >
+                        Accept
+                      </button>
+                    )}
+                    {application.status === "pending" && (
+                      <button
+                        onClick={() => {
+                          changeStatus("rejected", application._id);
+                        }}
+                        className="border-0 py-1 px-2 text-sm rounded-md bg-red-600 text-white cursor-pointer"
+                      >
+                        Reject
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
