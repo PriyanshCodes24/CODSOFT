@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
 import StatusBadge from "../Components/StatusBadge";
+import { formatDate } from "../Utils/formatDate";
 
 const ApplicantDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -23,11 +24,6 @@ const ApplicantDashboard = () => {
     };
     fetchApplications();
   }, []);
-
-  const getDate = (mongoDate) => {
-    const date = new Date(mongoDate);
-    return date.toLocaleDateString();
-  };
 
   return (
     <div className="min-h-screen bg-[#EAE0D5] text-[#5E503F]">
@@ -60,7 +56,7 @@ const ApplicantDashboard = () => {
                   <br />
                   <p>
                     <span className="font-semibold">applied On</span> :{" "}
-                    {getDate(application?.createdAt)}
+                    {formatDate(application?.createdAt)}
                   </p>
                   <p>
                     <span className="font-semibold">Status</span> :{" "}

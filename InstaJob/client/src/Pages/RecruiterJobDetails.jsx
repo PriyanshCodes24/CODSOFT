@@ -4,6 +4,7 @@ import api from "../api/axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import StatusBadge from "../Components/StatusBadge";
+import { formatDate } from "../Utils/formatDate";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -54,11 +55,6 @@ const RecruiterJobDetails = () => {
       console.log(error);
       toast.success(error.data.message || `application could not be ${status}`);
     }
-  };
-
-  const getDate = (mongoDate) => {
-    const date = new Date(mongoDate);
-    return date.toLocaleDateString();
   };
 
   return (
@@ -139,7 +135,7 @@ const RecruiterJobDetails = () => {
                   </p>
                   <p>
                     <span className="font-semibold">Date: </span>{" "}
-                    {getDate(application?.createdAt)}
+                    {formatDate(application?.createdAt)}
                   </p>
                   <p>
                     <span className="font-semibold">Status: </span>{" "}
