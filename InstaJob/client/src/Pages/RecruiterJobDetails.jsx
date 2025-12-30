@@ -3,6 +3,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import api from "../api/axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import StatusBadge from "../Components/StatusBadge";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -129,25 +130,20 @@ const RecruiterJobDetails = () => {
                   className="border border-[#5e503f48] rounded-md p-3 shadow-sm hover:shadow-md cursor-pointer "
                 >
                   <p>
-                    <span>Name: </span> {application?.applicant?.name}
+                    <span className="font-semibold">Name: </span>{" "}
+                    {application?.applicant?.name}
                   </p>
                   <p>
-                    <span>Email: </span> {application?.applicant?.email}
+                    <span className="font-semibold">Email: </span>{" "}
+                    {application?.applicant?.email}
                   </p>
                   <p>
-                    <span>Date: </span> {getDate(application?.createdAt)}
+                    <span className="font-semibold">Date: </span>{" "}
+                    {getDate(application?.createdAt)}
                   </p>
                   <p>
-                    <span>Status: </span>{" "}
-                    <span
-                      className={`${
-                        application.status === "accepted"
-                          ? "text-green-600"
-                          : "text-red-600"
-                      }`}
-                    >
-                      {application?.status}
-                    </span>
+                    <span className="font-semibold">Status: </span>{" "}
+                    <StatusBadge status={application.status} />
                   </p>
                   <div className="flex gap-x-2 mt-2">
                     {application.status === "pending" && (

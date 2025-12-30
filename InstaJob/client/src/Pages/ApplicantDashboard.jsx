@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
+import StatusBadge from "../Components/StatusBadge";
 
 const ApplicantDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -63,18 +64,7 @@ const ApplicantDashboard = () => {
                   </p>
                   <p>
                     <span className="font-semibold">Status</span> :{" "}
-                    <span
-                      className={`${
-                        application.status === "accepted"
-                          ? "text-green-600"
-                          : application.status === "rejected"
-                          ? "text-red-600"
-                          : "text-[#5E503F]"
-                      }`}
-                    >
-                      {application.status.charAt(0).toUpperCase() +
-                        application.status.slice(1)}
-                    </span>
+                    <StatusBadge status={application.status} />
                   </p>
                 </Link>
               );
