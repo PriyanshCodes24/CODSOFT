@@ -53,7 +53,7 @@ const JobDetails = () => {
         <div className="flex flex-col max-w-6xl px-4 py-8 mx-auto ">
           <h1 className="text-2xl font-bold mb-4">Job Details</h1>
           {isLoading ? (
-            <h2 className=" text-center text-lg text-[#22333b]">Loading...</h2>
+            <h2 className=" text-lg text-[#22333b]">Loading... please wait</h2>
           ) : !jobDetails ? (
             <h2>Job not Found</h2>
           ) : (
@@ -82,7 +82,7 @@ const JobDetails = () => {
               ) : (
                 <button
                   className={`mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white ${
-                    applyLoading ? "cursor-not-allowed" : "cursor-pointer"
+                    applyLoading ? "opacity-60" : "cursor-pointer"
                   } border-0 rounded-md px-8 py-2`}
                   onClick={handleApply}
                   disabled={applyLoading}

@@ -98,7 +98,7 @@ const Register = () => {
             type="submit"
             disabled={isLoading}
             className={`mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white border-0 rounded-md p-3 ${
-              isLoading ? "cursor-not-allowed" : "cursor-pointer"
+              isLoading ? "opacity-60" : "cursor-pointer"
             }`}
           >
             {isLoading ? <Loader /> : "Register"}

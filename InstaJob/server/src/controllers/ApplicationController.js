@@ -92,7 +92,7 @@ const patchStatus = async (req, res) => {
     }
 
     application.status = status;
-    application.save();
+    await application.save();
 
     res.status(200).json({
       success: true,

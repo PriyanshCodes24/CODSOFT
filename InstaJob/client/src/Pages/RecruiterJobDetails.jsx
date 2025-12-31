@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import api from "../api/axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
@@ -14,34 +14,34 @@ const RecruiterJobDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  const getJobDetails = async () => {
+    try {
+      setJobLoading(true);
+      const response = await api.get(`/jobs/get/${params.id}`);
+      setJobDetails(response.data.jobDetails);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setJobLoading(false);
+    }
+  };
+  const getApplications = async () => {
+    try {
+      setApplicationsLoading(true);
+      const response = await api.get(
+        `/applications/recruiter/get/${params.id}`
+      );
+      console.log(response);
+
+      setApplications(response.data.applications);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setApplicationsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getJobDetails = async () => {
-      try {
-        setJobLoading(true);
-        const response = await api.get(`/jobs/get/${params.id}`);
-        setJobDetails(response.data.jobDetails);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setJobLoading(false);
-      }
-    };
-    const getApplications = async () => {
-      try {
-        setApplicationsLoading(true);
-        const response = await api.get(
-          `/applications/recruiter/get/${params.id}`
-        );
-        console.log(response);
-
-        setApplications(response.data.applications);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setApplicationsLoading(false);
-      }
-    };
-
     getJobDetails();
     getApplications();
   }, []);
@@ -51,6 +51,7 @@ const RecruiterJobDetails = () => {
       const response = await api.patch(`applications/patch/${id}/${status}`);
       console.log(response.data);
       toast.success(response.data.message);
+      await getApplications();
     } catch (error) {
       console.log(error);
       toast.success(error.data.message || `application could not be ${status}`);
@@ -83,7 +84,7 @@ const RecruiterJobDetails = () => {
           </h2>
 
           {jobLoading ? (
-            <p className="text-sm text-gray-500">Loading Job Details...</p>
+            <p className="text-sm text-gray-500">Loading... please wait</p>
           ) : !jobDetails ? (
             <p className="text-sm text-gray-500">
               Job Details could not be fetched!
@@ -115,7 +116,7 @@ const RecruiterJobDetails = () => {
           </h2>
 
           {applicationsLoading ? (
-            <p className="text-sm text-gray-500">Loading Applications...</p>
+            <p className="text-sm text-gray-500">Loading... please wait</p>
           ) : applications.length === 0 ? (
             <p className="text-sm text-gray-500">No Applications yet</p>
           ) : (
@@ -147,7 +148,10 @@ const RecruiterJobDetails = () => {
                         onClick={() => {
                           changeStatus("accepted", application._id);
                         }}
-                        className="border-0 py-1 px-2 text-sm rounded-md bg-green-600 text-white cursor-pointer"
+                        disabled={applicationsLoading}
+                        className={`border-0 py-1 px-2 text-sm rounded-md bg-green-600 text-white cursor-pointer ${
+                          applicationsLoading && "opacity-60"
+                        }`}
                       >
                         Accept
                       </button>
@@ -157,7 +161,10 @@ const RecruiterJobDetails = () => {
                         onClick={() => {
                           changeStatus("rejected", application._id);
                         }}
-                        className="border-0 py-1 px-2 text-sm rounded-md bg-red-600 text-white cursor-pointer"
+                        disabled={applicationsLoading}
+                        className={`border-0 py-1 px-2 text-sm rounded-md bg-red-600 text-white cursor-pointer ${
+                          applicationsLoading && "opacity-60"
+                        }`}
                       >
                         Reject
                       </button>

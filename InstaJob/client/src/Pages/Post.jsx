@@ -9,6 +9,7 @@ const Post = () => {
   const typeOptions = ["Full-time", "Internship", "Remote"];
   const [type, setType] = useState("Full-time");
   const [description, setDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleTitleChange = (e) => {
@@ -29,7 +30,7 @@ const Post = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-
+      setIsLoading(true);
       const payload = {
         title,
         location,
@@ -43,6 +44,8 @@ const Post = () => {
       navigate("/jobs");
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -126,7 +129,10 @@ const Post = () => {
           </div>
           <button
             type="submit"
-            className="mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white cursor-pointer border-0 rounded-md p-3"
+            disabled={isLoading}
+            className={`mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white ${
+              isLoading ? "opacity-60" : "cursor-pointer"
+            } border-0 rounded-md p-3`}
           >
             Post
           </button>

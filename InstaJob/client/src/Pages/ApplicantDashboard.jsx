@@ -30,7 +30,7 @@ const ApplicantDashboard = () => {
       <div className="max-w-6xl px-4 py-8 mx-auto">
         <h1 className="text-center text-3xl mb-8 font-bold">My Applications</h1>
         {applicationsLoading ? (
-          <p className=" text-center text-gray-500">Loading Applications...</p>
+          <p className=" text-center text-gray-500">Loading... please wait</p>
         ) : applications.length === 0 ? (
           <p className=" text-center text-sm text-gray-500">
             No Applications yet
