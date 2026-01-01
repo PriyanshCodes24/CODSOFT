@@ -1,3 +1,4 @@
+const Application = require("../models/Application");
 const Job = require("../models/Job");
 
 const getJobs = async (req, res) => {
@@ -104,4 +105,28 @@ const getMyJobs = async (req, res) => {
   }
 };
 
-module.exports = { getJobs, getJobDetails, postJob, getMyJobs };
+const hasAlreadyApplied = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    const userId = req.user.id;
+
+    const job = await Application.findOne({ job: jobId, applicant: userId });
+    if (!job) {
+      return res.status(200).json({ hasApplied: false });
+    }
+    return res.status(200).json({ hasApplied: true });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal server error" });
+  }
+};
+
+module.exports = {
+  getJobs,
+  getJobDetails,
+  postJob,
+  getMyJobs,
+  hasAlreadyApplied,
+};

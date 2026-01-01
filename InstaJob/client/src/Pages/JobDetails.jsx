@@ -26,8 +26,19 @@ const JobDetails = () => {
     }
   };
 
+  const hasAlreadyApplied = async () => {
+    try {
+      const response = await api.get(`/jobs/hasApplied/${params.id}`);
+      console.log(response.data.hasApplied);
+      setHasApplied(response.data.hasApplied);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getJobDetails();
+    hasAlreadyApplied();
   }, [params.id]);
 
   const handleApply = async () => {
