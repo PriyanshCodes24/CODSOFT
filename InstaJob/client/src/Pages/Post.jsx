@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import toast from "react-hot-toast";
 
 const Post = () => {
   const [title, setTitle] = useState("");
@@ -30,6 +31,12 @@ const Post = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
+      if (!title.trim()) return toast.error("Title is required");
+      if (!location.trim()) return toast.error("Location is required");
+      if (!company.trim()) return toast.error("Company is required");
+      if (!description.trim()) return toast.error("Description is required");
+
       setIsLoading(true);
       const payload = {
         title,
@@ -41,7 +48,8 @@ const Post = () => {
 
       const response = await api.post(`/jobs`, payload);
       console.log(response);
-      navigate("/jobs");
+      toast.success("job posted successfully");
+      navigate("/recruiter/dashboard");
     } catch (error) {
       console.log(error);
     } finally {
@@ -49,64 +57,56 @@ const Post = () => {
     }
   };
   return (
-    <div className="flex items-center justify-center h-screen bg-[#EAE0D5] text-[#5E503F]">
-      <div className="w-md bg-[#e8d8cc] shadow-xl rounded-md p-4">
-        <h1 className="font-bold text-2xl mb-8 text-center">Post a Job</h1>
-        <form className="flex flex-col gap-y-2 p-8 " onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <label className="text-sm" htmlFor="title">
-              Title:{" "}
-            </label>
+    <div className="flex items-center justify-center min-h-screen bg-[#F8F9FA] text-gray-700 px-4">
+      <div className="w-full max-w-md bg-white border border-gray-200 shadow-lg rounded-lg p-6">
+        <h1 className="font-bold text-2xl m-4 text-center">Post a Job</h1>
+        <form className="space-y-4 " onSubmit={handleSubmit}>
+          <div>
+            <label className="text-sm text-gray-700 font-medium">Title: </label>
             <input
               value={title}
-              id="title"
-              placeholder="title"
+              placeholder="Frontend Developer"
               type="text"
-              className="bg-[#e5e2df] border focus:outline-none rounded-md p-2 text-sm"
+              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1"
               onChange={handleTitleChange}
             />
           </div>
-          <div className="flex flex-col">
-            <label className="text-sm" htmlFor="location">
+          <div>
+            <label className="text-sm text-gray-700 font-medium">
               Location:{" "}
             </label>
             <input
               value={location}
-              id="location"
-              placeholder="location"
+              placeholder="Remote / Bangalore"
               type="text"
-              className="bg-[#e5e2df] border focus:outline-none rounded-md p-2 text-sm"
+              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1"
               onChange={handleLocationChange}
             />
           </div>
-          <div className="flex flex-col">
-            <label className="text-sm" htmlFor="company">
+          <div>
+            <label className="text-sm text-gray-700 font-medium">
               Company:{" "}
             </label>
             <input
               value={company}
-              id="company"
-              placeholder="company"
+              placeholder="InstaJob"
               type="text"
-              className="bg-[#e5e2df] border focus:outline-none rounded-md p-2 text-sm"
+              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1"
               onChange={handleCompanyChange}
             />
           </div>
-          <div className="flex flex-col">
-            <label className="text-sm" htmlFor="type">
-              Type:{" "}
-            </label>
+          <div>
+            <label className="text-sm text-gray-700 font-medium">Type: </label>
             <select
               value={type}
-              id="type"
               placeholder="type"
               type="dropdown"
-              className="bg-[#e5e2df] border rounded-md p-2 text-sm "
+              className="w-full border rounded-md p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#22333B] mt-1"
               onChange={handleTypeChange}
             >
               {typeOptions.map((option) => (
                 <option
-                  className="bg-[#e5e2df]"
+                  className=""
                   key={option}
                   label={option}
                   value={option}
@@ -114,27 +114,27 @@ const Post = () => {
               ))}
             </select>
           </div>
-          <div className="flex flex-col">
-            <label className="text-sm" htmlFor="description">
+          <div>
+            <label className="text-sm text-gray-700 font-medium">
               Description:{" "}
             </label>
             <textarea
               value={description}
-              id="description"
               placeholder="description"
+              rows={4}
               type="text"
-              className="bg-[#e5e2df] border focus:outline-none rounded-md p-2 text-sm"
+              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1"
               onChange={handleDescriptionChange}
             />
           </div>
           <button
             type="submit"
             disabled={isLoading}
-            className={`mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white ${
+            className={`w-full mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white ${
               isLoading ? "opacity-60" : "cursor-pointer"
             } border-0 rounded-md p-3`}
           >
-            Post
+            {isLoading ? "Posting..." : "Post Job"}
           </button>
         </form>
       </div>

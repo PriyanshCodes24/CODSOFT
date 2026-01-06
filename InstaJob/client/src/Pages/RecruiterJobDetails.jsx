@@ -44,24 +44,24 @@ const RecruiterJobDetails = () => {
   useEffect(() => {
     getJobDetails();
     getApplications();
-  }, []);
+  }, [params.id]);
 
   const changeStatus = async (status, id) => {
     try {
       const response = await api.patch(`applications/patch/${id}/${status}`);
-      console.log(response.data);
-      toast.success(response.data.message);
+      console.log(response?.data);
+      toast.success(response?.data?.message);
       await getApplications();
     } catch (error) {
       console.log(error);
-      toast.success(error.data.message || `application could not be ${status}`);
+      toast.error(error?.data?.message || `application could not be ${status}`);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#EAE0D5] text-[#5E503F]">
+    <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className=" flex items-center  gap-4 mb-6 ">
+        <div className=" flex items-center gap-4 mb-6 ">
           <button
             onClick={() => {
               navigate(-1);
@@ -72,14 +72,14 @@ const RecruiterJobDetails = () => {
             Back
           </button>
           <div>
-            <h1 className="text-lg font-semibold text-[#0A0908]">
+            <h1 className="text-lg font-semibold text-gray-900">
               {jobLoading ? "Loading..." : jobDetails?.title}
             </h1>
             <p className="text-sm ">{!jobLoading && jobDetails?.location}</p>
           </div>
         </div>
-        <div className="border border-[#5e503f48] rounded-md p-4 mb-8 shadow-sm">
-          <h2 className=" text-sm font-semibold text-[#0A0908] mb-2">
+        <div className="bg-white border border-gray-200 rounded-lg p-4 mb-8 shadow-sm">
+          <h2 className="text-base font-semibold text-gray-900 mb-2">
             Job Overview
           </h2>
 
@@ -90,7 +90,7 @@ const RecruiterJobDetails = () => {
               Job Details could not be fetched!
             </p>
           ) : (
-            <div className="space-y-1 text-sm">
+            <div className=" space-y-1 text-sm">
               <p>
                 <span className="font-medium">Company: </span>
                 {jobDetails?.company}
@@ -111,20 +111,23 @@ const RecruiterJobDetails = () => {
           )}
         </div>
         <div>
-          <h2 className="text-md font-semibold text-[#0A0908] mb-2">
+          <h2 className="text-md font-semibold text-gray-900">
             Applications ({applications.length})
           </h2>
+          <p className="mb-4 text-sm text-gray-500">
+            Review and manage applications for this job
+          </p>
 
           {applicationsLoading ? (
             <p className="text-sm text-gray-500">Loading... please wait</p>
           ) : applications.length === 0 ? (
             <p className="text-sm text-gray-500">No Applications yet</p>
           ) : (
-            <div className="grid grid-cols-1 gap-4">
+            <div className="bg-white grid grid-cols-1 gap-4">
               {applications.map((application) => (
                 <div
                   key={application._id}
-                  className="border border-[#5e503f48] rounded-md p-3 shadow-sm hover:shadow-md cursor-pointer "
+                  className="border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md"
                 >
                   <p>
                     <span className="font-semibold">Name: </span>{" "}

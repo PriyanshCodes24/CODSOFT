@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
+import { formatDate } from "../Utils/formatDate";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,28 +25,37 @@ const RecruiterDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#EAE0D5] text-[#5E503F]">
-      <div className="max-w-6xl px-4 py-8 mx-auto">
+    <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
+      <div className="max-w-4xl px-4 py-8 mx-auto">
         <h1 className="text-center text-3xl mb-8 font-bold">Jobs Posted</h1>
         {isLoading ? (
-          <h2 className="text-center text-lg text-[#22333b]">
-            Loading... please wait
-          </h2>
-        ) : jobs === 0 ? (
-          <h2 className="text-center">No jobs posted yet!</h2>
+          <p className="text-center text-gray-500">Loading jobs...</p>
+        ) : jobs.length === 0 ? (
+          <p className="text-center text-sm text-gray-500">
+            No jobs posted yet!
+          </p>
         ) : (
           <div className="grid grid-cols-1 gap-4">
             {jobs.map((job) => (
               <Link
                 to={`/recruiter/jobs/${job._id}`}
                 key={job._id}
-                className="border border-[#5e503f48] shadow-sm rounded-md p-4 text-gray-600 cursor-pointer hover:shadow-md"
+                className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 text-gray-600 cursor-pointer hover:shadow-md"
               >
+                <p className="font-semibold text-lg text-gray-900">
+                  {" "}
+                  {job.title}
+                </p>
+                <p className="text-sm text-gray-500">
+                  {job.company} · {job.location}
+                </p>
+                <br />
                 <p>
-                  <b>Title</b> : {job.title}
+                  <span className="font-semibold">Type</span> : {job.type}
                 </p>
                 <p>
-                  <b>Location</b> : {job.location}
+                  <span className="font-semibold">Created on</span> :{" "}
+                  {formatDate(job.createdAt)}
                 </p>
               </Link>
             ))}
