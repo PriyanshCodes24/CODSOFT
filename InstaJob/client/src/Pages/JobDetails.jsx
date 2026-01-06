@@ -4,6 +4,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
+import { formatDate } from "../Utils/formatDate";
 
 const JobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -21,6 +22,7 @@ const JobDetails = () => {
       setJobDetails(response.data.jobDetails);
     } catch (error) {
       console.log(error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -33,13 +35,16 @@ const JobDetails = () => {
       setHasApplied(response.data.hasApplied);
     } catch (error) {
       console.log(error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     }
   };
 
   useEffect(() => {
     getJobDetails();
-    hasAlreadyApplied();
-  }, [params.id]);
+    if (user?.role === "applicant") {
+      hasAlreadyApplied();
+    }
+  }, [params.id, user]);
 
   const handleApply = async () => {
     try {
@@ -49,20 +54,26 @@ const JobDetails = () => {
       toast.success("Applied successfully");
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message || "Failed to apply");
+      toast.error(error?.response?.data?.message || "Failed to apply");
     } finally {
       setApplyLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#EAE0D5] text-[#5E503F] ">
-      <div className="shadow-xl rounded-xl p-4 w-2xs lg:w-lg">
-        <div className="flex cursor-pointer" onClick={() => navigate(-1)}>
-          {<IoIosArrowBack className="translate-1" />}Back
+    <div className="min-h-screen bg-[#F8F9FA] text-gray-700 px-2 py-8">
+      <div className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-6xl mx-auto py-10">
+        <div
+          className="flex cursor-pointer text-gray-400 text-sm"
+          onClick={() => navigate(-1)}
+        >
+          {<IoIosArrowBack className="translate-y-0.5" />}Back
         </div>
-        <div className="flex flex-col max-w-6xl px-4 py-8 mx-auto ">
-          <h1 className="text-2xl font-bold mb-4">Job Details</h1>
+        <div className="flex flex-col px-4 py-8">
+          <h1 className="text-3xl font-semibold text-gray-900">
+            {jobDetails?.title}
+          </h1>
+          <p className=" mb-6 text-sm text-gray-500">{jobDetails?.location}</p>
           {isLoading ? (
             <h2 className=" text-lg text-[#22333b]">Loading... please wait</h2>
           ) : !jobDetails ? (
@@ -70,26 +81,26 @@ const JobDetails = () => {
           ) : (
             <ul className="space-y-4">
               <li>
-                <b>Company :</b> {jobDetails.company}
+                <span className="font-bold">Company :</span>{" "}
+                {jobDetails.company}
               </li>
               <li>
-                <b>Title :</b> {jobDetails.title}
+                <span className="font-bold">Description :</span>{" "}
+                {jobDetails.description}
               </li>
               <li>
-                <b>Location :</b> {jobDetails.location}
+                <span className="font-bold">Type :</span> {jobDetails.type}
               </li>
               <li>
-                <b>Description :</b> {jobDetails.description}
-              </li>
-              <li>
-                <b>Type :</b> {jobDetails.type}
+                <span className="font-bold">Uploaded :</span>{" "}
+                {formatDate(jobDetails.createdAt)}
               </li>
             </ul>
           )}
           {user?.role === "applicant" && (
             <div className="flex justify-center mt-4">
               {hasApplied ? (
-                <p className="text-green-600 mt-4">Already applied</p>
+                <p className="text-green-600 mt-4">Application submitted</p>
               ) : (
                 <button
                   className={`mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white ${

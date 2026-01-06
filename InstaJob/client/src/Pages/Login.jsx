@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Loader from "../Components/Loader";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../Context/AuthContext";
 
@@ -51,44 +51,56 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-[#EAE0D5] text-[#5E503F] h-screen">
-      <div className="w-md shadow-xl p-4 rounded-md bg-[#e8d8cc]">
-        <h1 className="font-bold text-2xl text-center">Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] px-4">
+      <div className="w-full max-w-md shadow-lg p-6 rounded-lg bg-white border border-gray-200">
+        <h1 className="font-bold text-2xl text-center">Welcome back</h1>
+        <p className="text-center text-gray-500 text-sm mt-1">
+          Login to continue to your account
+        </p>
 
-        <form className="flex flex-col gap-y-2 p-8" onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <label htmlFor="name">Email:</label>
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <div>
+            <label className="text-sm font-medium text-gray-700">Email:</label>
             <input
               placeholder="example@gmail.com"
               value={email}
               onChange={handleEmailChange}
               type="email"
-              id="email"
-              className="border bg-[#e5e2df] rounded-md p-2 focus:outline-none text-sm"
+              autoFocus
+              className="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#22333B] text-sm"
             />
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="name">Password:</label>
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              Password:
+            </label>
             <input
-              placeholder="Password123"
+              placeholder="••••••••"
               value={password}
               onChange={handlePasswordChange}
               type="password"
-              id="password"
-              className="border bg-[#e5e2df] rounded-md p-2 focus:outline-none text-sm"
+              className="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#22333B] text-sm"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className={`mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white border-0 rounded-md p-3 ${
+            className={`mt-6 mb-4 w-full flex justify-center items-center bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white font-medium rounded-md py-2 transition ${
               isLoading ? "opacity-60" : "cursor-pointer"
             }`}
           >
             {isLoading ? <Loader /> : "Login"}
           </button>
         </form>
+        <div className="text-center">
+          <Link
+            className="text-gray-500 hover:text-gray-700 hover:border-b text-sm"
+            to="/register"
+          >
+            Don't have an account? Register
+          </Link>
+        </div>
       </div>
     </div>
   );

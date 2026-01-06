@@ -22,7 +22,7 @@ const Home = () => {
           <button
             key={cat.id}
             onClick={() => go(cat.label)}
-            className="flex flex-col items-center bg-[#22333B] hover:bg-[#233a4d] text-white rounded-lg border p-4 cursor-pointer gap-2 hover:shadow-md transition "
+            className="flex justify-center items-center bg-[#22333B] hover:bg-[#233a4d] text-white rounded-lg p-6 cursor-pointer gap-2 hover:shadow-lg transition-colors  duration-200 font-medium text-lg"
           >
             {cat.label}
           </button>

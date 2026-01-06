@@ -18,6 +18,7 @@ const ApplicantDashboard = () => {
         setApplications(response.data.applications);
       } catch (error) {
         console.log(error);
+        toast.error(error?.response?.data?.message);
       } finally {
         setApplicationsLoading(false);
       }
@@ -26,11 +27,11 @@ const ApplicantDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#EAE0D5] text-[#5E503F]">
-      <div className="max-w-6xl px-4 py-8 mx-auto">
+    <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
+      <div className="max-w-4xl px-4 py-8 mx-auto">
         <h1 className="text-center text-3xl mb-8 font-bold">My Applications</h1>
         {applicationsLoading ? (
-          <p className=" text-center text-gray-500">Loading... please wait</p>
+          <p className=" text-center text-gray-500">Loading applications...</p>
         ) : applications.length === 0 ? (
           <p className=" text-center text-sm text-gray-500">
             No Applications yet
@@ -45,17 +46,17 @@ const ApplicantDashboard = () => {
                 <Link
                   to={`/jobs/${application.job._id}`}
                   key={application._id}
-                  className="border border-[#5e503f48] shadow-sm rounded-md p-4 text-gray-600 cursor-pointer hover:shadow-md"
+                  className="border border-gray-200 shadow-sm rounded-lg p-4 text-gray-600 cursor-pointer hover:shadow-md bg-white"
                 >
-                  <p className="font-bold text-gray-700">
+                  <p className="font-semibold text-gray-900 text-lg">
                     {application?.job?.title}
                   </p>
-                  <p>
+                  <p className="text-sm text-gray-500">
                     {application?.job?.company} · {application?.job?.location}
                   </p>
                   <br />
                   <p>
-                    <span className="font-semibold">applied On</span> :{" "}
+                    <span className="font-semibold">Applied on</span> :{" "}
                     {formatDate(application?.createdAt)}
                   </p>
                   <p>

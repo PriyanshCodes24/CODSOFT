@@ -33,7 +33,7 @@ const Jobs = () => {
       setSearchParams(params);
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     }
   };
 
@@ -45,7 +45,7 @@ const Jobs = () => {
       setJobList(response.data.jobs);
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setSearchLoading(false);
     }
@@ -56,13 +56,8 @@ const Jobs = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    try {
-      setTitle(searchParams.get("q") || "");
-      setLocation(searchParams.get("loc") || "");
-    } catch (error) {
-      console.log(error);
-      toast.error(error.meassage);
-    }
+    setTitle(searchParams.get("q") || "");
+    setLocation(searchParams.get("loc") || "");
   }, [searchParams]);
 
   const handleTitle = (e) => {
@@ -73,13 +68,13 @@ const Jobs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#EAE0D5] text-[#5E503F] ">
+    <div className="min-h-screen bg-[#F8F9FA] text-gray-700 ">
       <div className="max-w-6xl px-4 py-8 mx-auto">
         <h1 className="text-2xl font-bold mb-4">Job Listings</h1>
 
         <div
           id="jobs-search-placeholder"
-          className=" sticky top-0 z-50 bg-[#EAE0D5] py-2 shadow-sm rounded mb-6"
+          className=" sticky top-0 z-50 bg-[#F8F9FA] py-2 shadow-md rounded-md mb-6"
         >
           <form
             className="flex flex-wrap sm:flex-nowrap gap-2 px-2 items-stretch"
@@ -107,8 +102,11 @@ const Jobs = () => {
             />
             <button
               aria-label="Search"
-              className="w-full h-10 sm:h-12 sm:w-12  shrink-0 bg-[#22333B] hover:bg-[#233c4d] hover:shadow-lg text-white rounded-md flex items-center justify-center px-3 cursor-pointer border-0 sm:ml-0"
+              className={`w-full h-10 sm:h-12 sm:w-12  shrink-0 bg-[#22333B] hover:bg-[#233c4d] hover:shadow-md text-white rounded-md flex items-center justify-center px-3 ${
+                searchLoading ? "opacity-60" : "cursor-pointer"
+              } border-0 sm:ml-0`}
               type="submit"
+              disabled={searchLoading}
             >
               {!searchLoading ? <FaSearch /> : <Loading />}
             </button>
@@ -121,13 +119,13 @@ const Jobs = () => {
               <Link
                 to={`/jobs/${job._id}`}
                 key={job._id}
-                className="border border-[#5e503f48] shadow-sm rounded-md p-4 text-gray-600 cursor-pointer hover:shadow-md"
+                className="border border-gray-200 shadow-md rounded-md hover:shadow-sm p-4 text-gray-600 cursor-pointer "
               >
                 <p>
-                  <b>Title</b> : {job.title}
+                  <span className="font-bold">Title</span> : {job.title}
                 </p>
                 <p>
-                  <b>Location</b> : {job.location}
+                  <span className="font-bold">Location</span> : {job.location}
                 </p>
               </Link>
             ))
