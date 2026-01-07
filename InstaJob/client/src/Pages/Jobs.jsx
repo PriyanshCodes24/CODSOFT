@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { useSearchParams, Link } from "react-router-dom";
 import Loading from "../Components/Loader";
 import api from "../api/axios";
+import { formatDate } from "../Utils/formatDate";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -121,11 +122,16 @@ const Jobs = () => {
                 key={job._id}
                 className="border border-gray-200 shadow-md rounded-md hover:shadow-sm p-4 text-gray-600 cursor-pointer "
               >
-                <p>
-                  <span className="font-bold">Title</span> : {job.title}
+                <p className="font-semibold text-gray-900 text-lg">
+                  {job?.title}
                 </p>
+                <p className="text-sm text-gray-500">
+                  {job?.company} · {job?.location}
+                </p>
+                <br />
                 <p>
-                  <span className="font-bold">Location</span> : {job.location}
+                  <span className="font-semibold">Created on</span> :{" "}
+                  {formatDate(job.createdAt)}
                 </p>
               </Link>
             ))

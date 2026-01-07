@@ -122,7 +122,7 @@ const JobDetails = () => {
               </li>
             </ul>
           )}
-          {user?.role === "applicant" && (
+          {user?.role === "applicant" && !hasApplied && (
             <label className="block mt-5">
               <span className="text-sm font-medium text-gray-700">
                 Resume (PDF only)
