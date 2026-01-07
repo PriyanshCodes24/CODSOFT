@@ -3,6 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 const connect_db = require("./server");
 const morgan = require("morgan");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -12,6 +13,7 @@ app.use(cors());
 app.use("/api/jobs/", require("./src/routes/JobRoute"));
 app.use("/api/auth/", require("./src/routes/AuthRoute"));
 app.use("/api/applications/", require("./src/routes/ApplicationRoute"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(morgan("dev"));
 
 app.listen(PORT, async () => {

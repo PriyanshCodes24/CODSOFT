@@ -69,7 +69,7 @@ This project focuses on **core functionality**, clean separation of concerns, an
 ### Backend (`.env`)
 
 ```
-PORT=5000
+PORT=2000
 MONGO_URI=your_mongodb_uri
 SECRET_KEY=your_jwt_secret
 ```
@@ -77,7 +77,7 @@ SECRET_KEY=your_jwt_secret
 ### Frontend (`.env`)
 
 ```
-VITE_API=http://localhost:5000/api
+VITE_API=http://localhost:2000/api
 ```
 
 ---

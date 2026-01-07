@@ -145,6 +145,15 @@ const RecruiterJobDetails = () => {
                     <span className="font-semibold">Status: </span>{" "}
                     <StatusBadge status={application.status} />
                   </p>
+                  <a
+                    href={`http://localhost:2000/${application.resume}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-600 underline text-sm"
+                  >
+                    Download Resume
+                  </a>
+
                   <div className="flex gap-x-2 mt-2">
                     {application.status === "pending" && (
                       <button

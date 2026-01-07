@@ -9,6 +9,7 @@ const {
   patchStatus,
   getApplicantJobs,
 } = require("../controllers/ApplicationController");
+const uploadResume = require("../Middleware/uploadResume");
 
 router.get(
   "/recruiter/get/:jobId",
@@ -22,12 +23,18 @@ router.get(
   authorize("applicant"),
   getApplicantJobs
 );
-router.post("/:id", protected, authorize("applicant"), applyJob);
 router.patch(
   "/patch/:applicationId/:status",
   protected,
   authorize("recruiter"),
   patchStatus
+);
+router.post(
+  "/:id",
+  protected,
+  authorize("applicant"),
+  uploadResume.single("resume"),
+  applyJob
 );
 
 module.exports = router;

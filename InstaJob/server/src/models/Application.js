@@ -7,6 +7,10 @@ const applicationSchema = new mongoose.Schema(
       ref: "Job",
       required: true,
     },
+    resume: {
+      type: String,
+      required: true,
+    },
     applicant: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

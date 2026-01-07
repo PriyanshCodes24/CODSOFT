@@ -14,6 +14,7 @@ const JobDetails = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [hasApplied, setHasApplied] = useState(false);
+  const [resume, setResume] = useState(null);
 
   const getJobDetails = async () => {
     try {
@@ -46,10 +47,34 @@ const JobDetails = () => {
     }
   }, [params.id, user]);
 
+  const handleResumeChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      toast.error("Only PDF resumes are allowed");
+      return;
+    }
+
+    setResume(file);
+  };
+
   const handleApply = async () => {
+    if (!resume) {
+      return toast.error("Please upload resume (PDF)");
+    }
+
     try {
       setApplyLoading(true);
-      await api.post(`/applications/${params.id}`);
+
+      const formData = new FormData();
+      formData.append("resume", resume);
+
+      await api.post(`/applications/${params.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setHasApplied(true);
       toast.success("Applied successfully");
     } catch (error) {
@@ -98,13 +123,44 @@ const JobDetails = () => {
             </ul>
           )}
           {user?.role === "applicant" && (
+            <label className="block mt-5">
+              <span className="text-sm font-medium text-gray-700">
+                Resume (PDF only)
+              </span>
+
+              <div className="mt-2 flex items-center justify-center w-full">
+                <label
+                  htmlFor="resume"
+                  className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
+                >
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <p className="text-sm text-gray-600">
+                      {resume ? resume.name : "Click to upload your resume"}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      PDF only · Max 2MB
+                    </p>
+                  </div>
+
+                  <input
+                    id="resume"
+                    type="file"
+                    accept=".pdf"
+                    className="hidden"
+                    onChange={handleResumeChange}
+                  />
+                </label>
+              </div>
+            </label>
+          )}
+          {user?.role === "applicant" && (
             <div className="flex justify-center mt-4">
               {hasApplied ? (
                 <p className="text-green-600 mt-4">Application submitted</p>
               ) : (
                 <button
                   className={`mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white ${
-                    applyLoading ? "opacity-60" : "cursor-pointer"
+                    applyLoading || !resume ? "opacity-60" : "cursor-pointer"
                   } border-0 rounded-md px-8 py-2`}
                   onClick={handleApply}
                   disabled={applyLoading}

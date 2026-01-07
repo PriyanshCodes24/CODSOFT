@@ -11,6 +11,14 @@ const applyJob = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Missing Job Id" });
     }
+
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Resume is required",
+      });
+    }
+
     const alreadyApplied = await Application.findOne({ job, applicant: user });
 
     if (alreadyApplied) {
@@ -20,7 +28,11 @@ const applyJob = async (req, res) => {
       });
     }
 
-    const application = await Application.create({ job, applicant: user });
+    const application = await Application.create({
+      job,
+      applicant: user,
+      resume: req.file.path,
+    });
 
     res
       .status(201)
