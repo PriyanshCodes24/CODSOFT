@@ -1,6 +1,6 @@
 const multer = require("multer");
 const path = require("path");
-import fs from "fs";
+const fs = require("fs");
 
 const uploadDir = "uploads/resumes";
 if (!fs.existsSync(uploadDir)) {
