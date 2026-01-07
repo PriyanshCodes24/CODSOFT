@@ -7,10 +7,21 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const { user, logout } = useAuth();
+  const capitilize = (role) => {
+    const cap = role.charAt(0).toUpperCase() + role.slice(1);
+    return cap;
+  };
   useEffect(() => {}, []);
 
   return (
     <div className="flex justify-end bg-[#22333B] text-white gap-2 sm:gap-4 md:gap-6 p-4">
+      {user && (
+        <div
+          className={`mr-auto transition-all duration-300 border-b-2 border-transparent`}
+        >
+          {capitilize(user?.role) || ""}
+        </div>
+      )}
       <div
         className={`transition-all duration-300 cursor-pointer border-b-2 border-transparent hover:border-white ${
           location.pathname === "/" && "font-bold"
