@@ -11,7 +11,7 @@ const HomeHero = () => {
         <h1 className="font-bold text-3xl sm:text-5xl text-[#0A0908] py-16 sm:py-24 text-center leading-tight">
           Search. Apply. Get Hired.
         </h1>
-        <p className="mt-4 text-[#5E503F] text-base sm:text-lg max-w-2xl mx-auto">
+        <p className="mt-4 text-[#5e3f3f] text-base sm:text-lg max-w-2xl mx-auto">
           Discover curated job opportunities and apply with confidence —
           everything you need in one place.
         </p>

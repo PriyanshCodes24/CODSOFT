@@ -12,6 +12,7 @@ const Jobs = () => {
   const [title, setTitle] = useState(searchParams.get("q") || "");
   const [location, setLocation] = useState(searchParams.get("loc") || "");
   const [searchLoading, setSearchLoading] = useState(false);
+  // const [Loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     try {
@@ -115,7 +116,11 @@ const Jobs = () => {
         </div>
 
         <div id="jobs-list" className="grid grid-cols-1 gap-4">
-          {jobList.length !== 0 ? (
+          {searchLoading ? (
+            <p className="font-bold text-2xl text-center rounded p-4 text-gray-600">
+              Loading jobs...
+            </p>
+          ) : jobList.length !== 0 ? (
             jobList.map((job) => (
               <Link
                 to={`/jobs/${job._id}`}
