@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { formatDate } from "../Utils/formatDate";
 import { buttonUi } from "../Utils/uiUtils";
+import BackButton from "../Components/BackButton";
 
 const JobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -89,12 +90,7 @@ const JobDetails = () => {
   return (
     <div className="min-h-screen bg-[#F8F9FA] text-gray-700 px-2 py-8">
       <div className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-6xl mx-auto py-10">
-        <div
-          className="flex cursor-pointer text-gray-400 text-sm"
-          onClick={() => navigate(-1)}
-        >
-          {<IoIosArrowBack className="translate-y-0.5" />}Back
-        </div>
+        <BackButton />
         <div className="flex flex-col px-4 py-8">
           <h1 className="text-3xl font-semibold text-gray-900">
             {jobDetails?.title}
@@ -162,7 +158,7 @@ const JobDetails = () => {
                 <button
                   className={`
                     ${buttonUi}
-                     px-8 py-2 
+                     px-8 
                     ${
                       applyLoading || !resume ? "opacity-60" : "cursor-pointer"
                     }`}

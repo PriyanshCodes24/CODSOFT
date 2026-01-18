@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 import { buttonUi } from "../Utils/uiUtils";
+import BackButton from "../Components/BackButton";
 
 const Post = () => {
   const [title, setTitle] = useState("");
@@ -60,6 +61,7 @@ const Post = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#F8F9FA] text-gray-700 px-4">
       <div className="w-full max-w-md bg-white border border-gray-200 shadow-lg rounded-lg p-6">
+        <BackButton />
         <h1 className="font-bold text-2xl m-4 text-center">Post a Job</h1>
         <form className="space-y-4 " onSubmit={handleSubmit}>
           <div>

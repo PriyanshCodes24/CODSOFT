@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
 import { statusButtonUi } from "../Utils/uiUtils";
+import BackButton from "../Components/BackButton";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -63,15 +64,7 @@ const RecruiterJobDetails = () => {
     <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className=" flex items-center gap-4 mb-6 ">
-          <button
-            onClick={() => {
-              navigate(-1);
-            }}
-            className="flex items-center text-sm hover:underline cursor-pointer"
-          >
-            <IoIosArrowBack className="mr-1" />
-            Back
-          </button>
+          <BackButton />
           <div>
             <h1 className="text-lg font-semibold text-gray-900">
               {jobLoading ? "Loading..." : jobDetails?.title}

@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import Loader from "../Components/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { buttonUi } from "../Utils/uiUtils";
 
 const Register = () => {
   const API = import.meta.env.VITE_API;
@@ -103,7 +104,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`mt-6 mb-4 w-full flex justify-center items-center bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] font-medium text-white border-0 rounded-md py-2 transition ${
+            className={`w-full ${buttonUi} ${
               isLoading ? "opacity-60" : "cursor-pointer"
             }`}
           >
