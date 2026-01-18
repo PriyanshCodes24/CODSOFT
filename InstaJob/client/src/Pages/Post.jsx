@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import toast from "react-hot-toast";
+import { buttonUi } from "../Utils/uiUtils";
 
 const Post = () => {
   const [title, setTitle] = useState("");
@@ -130,9 +131,9 @@ const Post = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full mt-4 hover:shadow-lg bg-[#22333B] focus:bg-[#233c4d] hover:bg-[#233c4d] text-white ${
+            className={`w-full p-3 ${buttonUi} ${
               isLoading ? "opacity-60" : "cursor-pointer"
-            } border-0 rounded-md p-3`}
+            }`}
           >
             {isLoading ? "Posting..." : "Post Job"}
           </button>

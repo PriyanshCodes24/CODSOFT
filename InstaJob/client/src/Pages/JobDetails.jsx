@@ -160,11 +160,12 @@ const JobDetails = () => {
                 <p className="text-green-600 mt-4">Application submitted</p>
               ) : (
                 <button
-                  className={
-                    buttonUi +
-                    " " +
-                    (applyLoading || !resume ? "opacity-60" : "cursor-pointer")
-                  }
+                  className={`
+                    ${buttonUi}
+                     px-8 py-2 
+                    ${
+                      applyLoading || !resume ? "opacity-60" : "cursor-pointer"
+                    }`}
                   onClick={handleApply}
                   disabled={applyLoading}
                 >
