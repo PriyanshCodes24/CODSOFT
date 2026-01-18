@@ -4,7 +4,7 @@ import Loader from "../Components/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useAuth } from "../Context/AuthContext";
-import { buttonUi } from "../Utils/uiUtils";
+import { buttonUi } from "../Utils/uiClasses";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -87,11 +87,12 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full ${buttonUi} ${
+            className={`w-full mt-6 mb-4 flex justify-center items-center gap-2 ${buttonUi} ${
               isLoading ? "opacity-60" : "cursor-pointer"
             }`}
           >
-            {isLoading ? <Loader /> : "Login"}
+            {isLoading && <Loader />}
+            {isLoading ? "Logging in" : "Login"}
           </button>
         </form>
         <div className="text-center">

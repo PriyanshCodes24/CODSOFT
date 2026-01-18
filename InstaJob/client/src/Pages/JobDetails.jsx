@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { IoIosArrowBack } from "react-icons/io";
+import { useParams } from "react-router-dom";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { formatDate } from "../Utils/formatDate";
-import { buttonUi } from "../Utils/uiUtils";
+import { buttonUi } from "../Utils/uiClasses";
 import BackButton from "../Components/BackButton";
+import Loader from "../Components/Loader";
 
 const JobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
   const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [applyLoading, setApplyLoading] = useState(false);
-  const navigate = useNavigate();
   const { user } = useAuth();
   const [hasApplied, setHasApplied] = useState(false);
   const [resume, setResume] = useState(null);
@@ -157,14 +156,15 @@ const JobDetails = () => {
               ) : (
                 <button
                   className={`
+                    px-8 mt-6 flex items-center justify-center gap-2
                     ${buttonUi}
-                     px-8 
                     ${
                       applyLoading || !resume ? "opacity-60" : "cursor-pointer"
                     }`}
                   onClick={handleApply}
                   disabled={applyLoading}
                 >
+                  {applyLoading && <Loader />}
                   {applyLoading ? "Applying..." : "Apply"}
                 </button>
               )}

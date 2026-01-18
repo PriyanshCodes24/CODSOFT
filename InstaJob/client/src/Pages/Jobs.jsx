@@ -5,7 +5,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import Loading from "../Components/Loader";
 import api from "../api/axios";
 import { formatDate } from "../Utils/formatDate";
-import { listCardUi } from "../Utils/uiUtils";
+import { buttonUi, listCardUi } from "../Utils/uiClasses";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -13,7 +13,6 @@ const Jobs = () => {
   const [title, setTitle] = useState(searchParams.get("q") || "");
   const [location, setLocation] = useState(searchParams.get("loc") || "");
   const [searchLoading, setSearchLoading] = useState(false);
-  // const [Loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     try {
@@ -105,9 +104,9 @@ const Jobs = () => {
             />
             <button
               aria-label="Search"
-              className={`w-full h-10 sm:h-12 sm:w-12  shrink-0 bg-[#22333B] hover:bg-[#233c4d] hover:shadow-md text-white rounded-md flex items-center justify-center px-3 ${
+              className={`w-full ${buttonUi} h-10 sm:h-12 sm:w-12 flex items-center justify-center sm:ml-0 ${
                 searchLoading ? "opacity-60" : "cursor-pointer"
-              } border-0 sm:ml-0`}
+              }`}
               type="submit"
               disabled={searchLoading}
             >

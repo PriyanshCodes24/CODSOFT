@@ -3,7 +3,7 @@ import api from "../api/axios";
 import { Link } from "react-router-dom";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
-import { listCardUi } from "../Utils/uiUtils";
+import { listCardUi } from "../Utils/uiClasses";
 
 const ApplicantDashboard = () => {
   const [applications, setApplications] = useState([]);

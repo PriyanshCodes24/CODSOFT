@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
 import { formatDate } from "../Utils/formatDate";
-import { listCardUi } from "../Utils/uiUtils";
+import { listCardUi } from "../Utils/uiClasses";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);

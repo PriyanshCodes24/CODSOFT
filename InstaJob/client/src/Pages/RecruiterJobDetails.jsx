@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
 import api from "../api/axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
-import { statusButtonUi } from "../Utils/uiUtils";
+import { statusButtonUi } from "../Utils/uiClasses";
 import BackButton from "../Components/BackButton";
 
 const RecruiterJobDetails = () => {
@@ -14,7 +13,6 @@ const RecruiterJobDetails = () => {
   const [jobLoading, setJobLoading] = useState(false);
   const [applicationsLoading, setApplicationsLoading] = useState(false);
   const params = useParams();
-  const navigate = useNavigate();
 
   const getJobDetails = async () => {
     try {
