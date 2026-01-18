@@ -3,6 +3,7 @@ import api from "../api/axios";
 import { Link } from "react-router-dom";
 import { formatDate } from "../Utils/formatDate";
 import { listCardUi } from "../Utils/uiClasses";
+import Skeleton from "../Components/Skeleton";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +31,16 @@ const RecruiterDashboard = () => {
       <div className="max-w-4xl px-4 py-8 mx-auto">
         <h1 className="text-center text-3xl mb-8 font-bold">Jobs Posted</h1>
         {isLoading ? (
-          <p className="text-center text-gray-500">Loading jobs...</p>
+          <div className="space-y-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className={listCardUi}>
+                <Skeleton className="h-5 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/3" />
+                <Skeleton className="mt-8 h-4 w-2/3" />
+                <Skeleton className="mt-2 h-4 w-1/3" />
+              </div>
+            ))}
+          </div>
         ) : jobs.length === 0 ? (
           <p className="text-center text-sm text-gray-500">
             No jobs posted yet!

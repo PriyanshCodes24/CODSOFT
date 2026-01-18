@@ -6,13 +6,14 @@ import Loading from "../Components/Loader";
 import api from "../api/axios";
 import { formatDate } from "../Utils/formatDate";
 import { buttonUi, listCardUi } from "../Utils/uiClasses";
+import Skeleton from "../Components/Skeleton";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [title, setTitle] = useState(searchParams.get("q") || "");
   const [location, setLocation] = useState(searchParams.get("loc") || "");
-  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(true);
 
   const handleSubmit = (e) => {
     try {
@@ -117,9 +118,15 @@ const Jobs = () => {
 
         <div id="jobs-list" className="grid grid-cols-1 gap-4">
           {searchLoading ? (
-            <p className="font-bold text-2xl text-center rounded p-4 text-gray-600">
-              Loading jobs...
-            </p>
+            <div className="space-y-4">
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className={listCardUi}>
+                  <Skeleton className="h-5 w-2/3 mb-2" />
+                  <Skeleton className="h-4 w-1/3" />
+                  <Skeleton className="mt-8 h-4 w-1/2" />
+                </div>
+              ))}
+            </div>
           ) : jobList.length !== 0 ? (
             jobList.map((job) => (
               <Link

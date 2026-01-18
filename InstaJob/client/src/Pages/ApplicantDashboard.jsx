@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
 import { listCardUi } from "../Utils/uiClasses";
+import Skeleton from "../Components/Skeleton";
 
 const ApplicantDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -14,11 +15,10 @@ const ApplicantDashboard = () => {
       try {
         setApplicationsLoading(true);
         const response = await api.get("/applications/applicant/get");
-        console.log(response.data.applications);
 
         setApplications(response.data.applications);
       } catch (error) {
-        console.log(error);
+        console.error(error);
         toast.error(error?.response?.data?.message);
       } finally {
         setApplicationsLoading(false);
@@ -32,7 +32,16 @@ const ApplicantDashboard = () => {
       <div className="max-w-4xl px-4 py-8 mx-auto">
         <h1 className="text-center text-3xl mb-8 font-bold">My Applications</h1>
         {applicationsLoading ? (
-          <p className=" text-center text-gray-500">Loading applications...</p>
+          <div className="space-y-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className={listCardUi}>
+                <Skeleton className="h-5 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/3" />
+                <Skeleton className="mt-8 h-4 w-2/3" />
+                <Skeleton className="mt-2 h-4 w-1/3" />
+              </div>
+            ))}
+          </div>
         ) : applications.length === 0 ? (
           <p className=" text-center text-sm text-gray-500">
             No Applications yet
