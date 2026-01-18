@@ -5,6 +5,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import Loading from "../Components/Loader";
 import api from "../api/axios";
 import { formatDate } from "../Utils/formatDate";
+import { listCardUi } from "../Utils/uiUtils";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -125,7 +126,7 @@ const Jobs = () => {
               <Link
                 to={`/jobs/${job._id}`}
                 key={job._id}
-                className="border border-gray-200 shadow-md rounded-md hover:shadow-sm p-4 text-gray-600 cursor-pointer "
+                className={listCardUi}
               >
                 <p className="font-semibold text-gray-900 text-lg">
                   {job?.title}

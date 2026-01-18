@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
 import { formatDate } from "../Utils/formatDate";
+import { listCardUi } from "../Utils/uiUtils";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +41,7 @@ const RecruiterDashboard = () => {
               <Link
                 to={`/recruiter/jobs/${job._id}`}
                 key={job._id}
-                className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 text-gray-600 cursor-pointer hover:shadow-md"
+                className={listCardUi}
               >
                 <p className="font-semibold text-lg text-gray-900">
                   {" "}

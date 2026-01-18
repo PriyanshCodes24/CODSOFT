@@ -3,6 +3,7 @@ import api from "../api/axios";
 import { Link } from "react-router-dom";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
+import { listCardUi } from "../Utils/uiUtils";
 
 const ApplicantDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -46,7 +47,7 @@ const ApplicantDashboard = () => {
                 <Link
                   to={`/jobs/${application.job._id}`}
                   key={application._id}
-                  className="border border-gray-200 shadow-sm rounded-lg p-4 text-gray-600 cursor-pointer hover:shadow-md bg-white"
+                  className={listCardUi}
                 >
                   <p className="font-semibold text-gray-900 text-lg">
                     {application?.job?.title}
