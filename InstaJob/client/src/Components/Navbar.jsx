@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+import { FaUserPlus, FaUserTie } from "react-icons/fa6";
 
 const Navbar = () => {
   const location = useLocation();
@@ -17,9 +18,14 @@ const Navbar = () => {
     <div className="flex justify-end bg-[#22333B] text-white gap-2 sm:gap-4 md:gap-6 p-4">
       {user && (
         <div
-          className={`mr-auto transition-all duration-300 border-b-2 border-transparent`}
+          className={` flex mr-auto transition-all gap-1 duration-300 border-b-2 border-transparent`}
         >
-          {capitilize(user?.role) || ""}
+          {user?.role === "recruiter" ? (
+            <FaUserTie className="translate-y-1 text-sm" />
+          ) : (
+            <FaUserPlus className="translate-y-1 text-sm" />
+          )}
+          <div className="sm:block hidden">{capitilize(user?.role) || ""}</div>
         </div>
       )}
       <div

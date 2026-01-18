@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
-import { statusButtonUi } from "../Utils/uiClasses";
+import { listCardUi, statusButtonUi } from "../Utils/uiClasses";
 import BackButton from "../Components/BackButton";
+import Skeleton from "../Components/Skeleton";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -63,11 +64,20 @@ const RecruiterJobDetails = () => {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className=" flex items-center gap-4 mb-6 ">
           <BackButton />
-          <div>
-            <h1 className="text-lg font-semibold text-gray-900">
-              {jobLoading ? "Loading..." : jobDetails?.title}
-            </h1>
-            <p className="text-sm ">{!jobLoading && jobDetails?.location}</p>
+          <div className="w-full">
+            {jobLoading ? (
+              <>
+                <Skeleton className="h-5 w-1/2" />
+                <Skeleton className="mt-2 h-4 w-1/3" />
+              </>
+            ) : (
+              <>
+                <h1 className="text-lg font-semibold text-gray-900">
+                  {jobDetails?.title}
+                </h1>
+                <p className="text-sm ">{jobDetails?.location}</p>
+              </>
+            )}
           </div>
         </div>
         <div className="bg-white border border-gray-200 rounded-lg p-4 mb-8 shadow-sm">
@@ -76,7 +86,12 @@ const RecruiterJobDetails = () => {
           </h2>
 
           {jobLoading ? (
-            <p className="text-sm text-gray-500">Loading... please wait</p>
+            <div className="space-y-3">
+              <Skeleton className="h-4 w-1/2 " />
+              <Skeleton className="h-4 w-3/4" />
+              <Skeleton className="h-4 w-1/3 " />
+              <Skeleton className="h-4 w-1/2 " />
+            </div>
           ) : !jobDetails ? (
             <p className="text-sm text-gray-500">
               Job Details could not be fetched!
@@ -111,7 +126,14 @@ const RecruiterJobDetails = () => {
           </p>
 
           {applicationsLoading ? (
-            <p className="text-sm text-gray-500">Loading... please wait</p>
+            <div className="space-y-4">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className={listCardUi}>
+                  <Skeleton className="h-23 w-2/3 mb-2" />
+                  <Skeleton className="h-4 w-1/3 " />
+                </div>
+              ))}
+            </div>
           ) : applications.length === 0 ? (
             <p className="text-sm text-gray-500">No Applications yet</p>
           ) : (

@@ -7,6 +7,7 @@ import { formatDate } from "../Utils/formatDate";
 import { buttonUi } from "../Utils/uiClasses";
 import BackButton from "../Components/BackButton";
 import Loader from "../Components/Loader";
+import Skeleton from "../Components/Skeleton";
 
 const JobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -87,89 +88,105 @@ const JobDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-gray-700 px-2 py-8">
+    <div className="min-h-screen bg-[#F8F9FA] text-gray-700 px-2 py-8 md:py-30">
       <div className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-6xl mx-auto py-10">
         <BackButton />
         <div className="flex flex-col px-4 py-8">
-          <h1 className="text-3xl font-semibold text-gray-900">
-            {jobDetails?.title}
-          </h1>
-          <p className=" mb-6 text-sm text-gray-500">{jobDetails?.location}</p>
-          {isLoading ? (
-            <h2 className=" text-lg text-[#22333b]">Loading... please wait</h2>
-          ) : !jobDetails ? (
-            <h2>Job not Found</h2>
-          ) : (
-            <ul className="space-y-4">
-              <li>
-                <span className="font-bold">Company :</span>{" "}
-                {jobDetails.company}
-              </li>
-              <li>
-                <span className="font-bold">Description :</span>{" "}
-                {jobDetails.description}
-              </li>
-              <li>
-                <span className="font-bold">Type :</span> {jobDetails.type}
-              </li>
-              <li>
-                <span className="font-bold">Uploaded :</span>{" "}
-                {formatDate(jobDetails.createdAt)}
-              </li>
-            </ul>
-          )}
-          {user?.role === "applicant" && !hasApplied && (
-            <label className="block mt-5">
-              <span className="text-sm font-medium text-gray-700">
-                Resume (PDF only)
-              </span>
-
-              <div className="mt-2 flex items-center justify-center w-full">
-                <label
-                  htmlFor="resume"
-                  className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
-                >
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <p className="text-sm text-gray-600">
-                      {resume ? resume.name : "Click to upload your resume"}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-1">
-                      PDF only · Max 2MB
-                    </p>
-                  </div>
-
-                  <input
-                    id="resume"
-                    type="file"
-                    accept=".pdf"
-                    className="hidden"
-                    onChange={handleResumeChange}
-                  />
-                </label>
+          <>
+            {isLoading ? (
+              <div className="">
+                <Skeleton className="h-7 w-5/6 mb-3" />
+                <Skeleton className="h-4 w-1/2 mb-7" />
+                <Skeleton className="h-4 w-2/3 mb-6" />
+                <Skeleton className="h-4 w-3/4 mb-6" />
+                <Skeleton className="h-4 w-1/3 mb-6" />
+                <Skeleton className="h-4 w-2/3 mb-6" />
               </div>
-            </label>
-          )}
-          {user?.role === "applicant" && (
-            <div className="flex justify-center mt-4">
-              {hasApplied ? (
-                <p className="text-green-600 mt-4">Application submitted</p>
-              ) : (
-                <button
-                  className={`
+            ) : !jobDetails ? (
+              <h2>Job not Found</h2>
+            ) : (
+              <>
+                <h1 className="text-3xl font-semibold text-gray-900">
+                  {jobDetails?.title}
+                </h1>
+                <p className=" mb-6 text-sm text-gray-500">
+                  {jobDetails?.location}
+                </p>
+
+                <ul className="space-y-4">
+                  <li>
+                    <span className="font-bold">Company :</span>{" "}
+                    {jobDetails.company}
+                  </li>
+                  <li>
+                    <span className="font-bold">Description :</span>{" "}
+                    {jobDetails.description}
+                  </li>
+                  <li>
+                    <span className="font-bold">Type :</span> {jobDetails.type}
+                  </li>
+                  <li>
+                    <span className="font-bold">Uploaded :</span>{" "}
+                    {formatDate(jobDetails.createdAt)}
+                  </li>
+                </ul>
+              </>
+            )}
+
+            {user?.role === "applicant" && !hasApplied && (
+              <label className="block mt-5">
+                <span className="text-sm font-medium text-gray-700">
+                  Resume (PDF only)
+                </span>
+
+                <div className="mt-2 flex items-center justify-center w-full">
+                  <label
+                    htmlFor="resume"
+                    className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
+                  >
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <p className="text-sm text-gray-600">
+                        {resume ? resume.name : "Click to upload your resume"}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        PDF only · Max 2MB
+                      </p>
+                    </div>
+
+                    <input
+                      id="resume"
+                      type="file"
+                      accept=".pdf"
+                      className="hidden"
+                      onChange={handleResumeChange}
+                    />
+                  </label>
+                </div>
+              </label>
+            )}
+
+            {user?.role === "applicant" && (
+              <div className="flex justify-center mt-4">
+                {hasApplied ? (
+                  <p className="text-green-600 mt-4">Application submitted</p>
+                ) : (
+                  <button
+                    className={`
                     px-8 mt-6 flex items-center justify-center gap-2
                     ${buttonUi}
                     ${
                       applyLoading || !resume ? "opacity-60" : "cursor-pointer"
                     }`}
-                  onClick={handleApply}
-                  disabled={applyLoading}
-                >
-                  {applyLoading && <Loader />}
-                  {applyLoading ? "Applying..." : "Apply"}
-                </button>
-              )}
-            </div>
-          )}
+                    onClick={handleApply}
+                    disabled={applyLoading}
+                  >
+                    {applyLoading && <Loader />}
+                    {applyLoading ? "Applying..." : "Apply"}
+                  </button>
+                )}
+              </div>
+            )}
+          </>
         </div>
       </div>
     </div>
