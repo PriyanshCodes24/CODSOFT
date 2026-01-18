@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
+import { statusButtonUi } from "../Utils/uiUtils";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -161,7 +162,7 @@ const RecruiterJobDetails = () => {
                           changeStatus("accepted", application._id);
                         }}
                         disabled={applicationsLoading}
-                        className={`border-0 py-1 px-2 text-sm rounded-md bg-green-600 text-white cursor-pointer ${
+                        className={`${statusButtonUi} bg-green-600 hover:bg-green-700 ${
                           applicationsLoading && "opacity-60"
                         }`}
                       >
@@ -174,7 +175,7 @@ const RecruiterJobDetails = () => {
                           changeStatus("rejected", application._id);
                         }}
                         disabled={applicationsLoading}
-                        className={`border-0 py-1 px-2 text-sm rounded-md bg-red-600 text-white cursor-pointer ${
+                        className={`${statusButtonUi} bg-red-600 hover:bg-red-700 ${
                           applicationsLoading && "opacity-60"
                         }`}
                       >
