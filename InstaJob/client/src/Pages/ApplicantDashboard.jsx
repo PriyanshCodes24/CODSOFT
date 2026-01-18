@@ -3,8 +3,9 @@ import api from "../api/axios";
 import { Link } from "react-router-dom";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
-import { listCardUi } from "../Utils/uiClasses";
+import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
+import EmptyState from "../Components/EmptyState";
 
 const ApplicantDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -43,40 +44,48 @@ const ApplicantDashboard = () => {
             ))}
           </div>
         ) : applications.length === 0 ? (
-          <p className=" text-center text-sm text-gray-500">
-            No Applications yet
-          </p>
+          <EmptyState
+            title="No applications yet"
+            description="Once you apply to jobs, they'll appear here."
+            action={
+              <Link to="/jobs" className={`px-6 ${buttonUi}`}>
+                Browse jobs
+              </Link>
+            }
+          />
         ) : (
-          <div className="grid grid-cols-1 gap-4">
-            {applications.map((application) => {
-              if (!application.job) {
-                return null;
-              }
-              return (
-                <Link
-                  to={`/jobs/${application.job._id}`}
-                  key={application._id}
-                  className={listCardUi}
-                >
-                  <p className="font-semibold text-gray-900 text-lg">
-                    {application?.job?.title}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {application?.job?.company} · {application?.job?.location}
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-semibold">Applied on</span> :{" "}
-                    {formatDate(application?.createdAt)}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Status</span> :{" "}
-                    <StatusBadge status={application.status} />
-                  </p>
-                </Link>
-              );
-            })}
-          </div>
+          <>
+            <div className="grid grid-cols-1 gap-4">
+              {applications.map((application) => {
+                if (!application.job) {
+                  return null;
+                }
+                return (
+                  <Link
+                    to={`/jobs/${application.job._id}`}
+                    key={application._id}
+                    className={listCardUi}
+                  >
+                    <p className="font-semibold text-gray-900 text-lg">
+                      {application?.job?.title}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {application?.job?.company} · {application?.job?.location}
+                    </p>
+                    <br />
+                    <p>
+                      <span className="font-semibold">Applied on</span> :{" "}
+                      {formatDate(application?.createdAt)}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Status</span> :{" "}
+                      <StatusBadge status={application.status} />
+                    </p>
+                  </Link>
+                );
+              })}
+            </div>
+          </>
         )}
       </div>
     </div>

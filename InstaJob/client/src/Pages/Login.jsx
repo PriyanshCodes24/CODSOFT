@@ -87,7 +87,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full mt-6 mb-4 flex justify-center items-center gap-2 ${buttonUi} ${
+            className={`w-full font-semibold mt-6 mb-4 flex justify-center items-center gap-2 ${buttonUi} ${
               isLoading ? "opacity-60" : "cursor-pointer"
             }`}
           >

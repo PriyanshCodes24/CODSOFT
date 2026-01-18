@@ -104,7 +104,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full mt-6 mb-4 flex items-center justify-center gap-2 ${buttonUi} ${
+            className={`w-full font-semibold mt-6 mb-4 flex items-center justify-center gap-2 ${buttonUi} ${
               isLoading ? "opacity-60" : "cursor-pointer"
             }`}
           >

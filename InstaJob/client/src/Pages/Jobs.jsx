@@ -7,6 +7,7 @@ import api from "../api/axios";
 import { formatDate } from "../Utils/formatDate";
 import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
+import EmptyState from "../Components/EmptyState";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -148,9 +149,15 @@ const Jobs = () => {
               </Link>
             ))
           ) : (
-            <h1 className="font-bold text-2xl text-center rounded p-4 text-gray-600">
-              No jobs found
-            </h1>
+            <EmptyState
+              title="No jobs found"
+              description="Try changing keywords or removing filters"
+              action={
+                <Link to="/jobs" className={`px-4 ${buttonUi}`}>
+                  Clear filters
+                </Link>
+              }
+            />
           )}
         </div>
       </div>

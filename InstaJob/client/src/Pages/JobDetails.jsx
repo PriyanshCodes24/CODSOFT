@@ -172,7 +172,7 @@ const JobDetails = () => {
                 ) : (
                   <button
                     className={`
-                    px-8 mt-6 flex items-center justify-center gap-2
+                    px-8 mt-6  font-semibold flex items-center justify-center gap-2
                     ${buttonUi}
                     ${
                       applyLoading || !resume ? "opacity-60" : "cursor-pointer"
