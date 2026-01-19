@@ -9,6 +9,7 @@ import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import EmptyState from "../Components/EmptyState";
 import PageTransition from "../Components/PageTransition";
+import { motion } from "framer-motion";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -132,22 +133,23 @@ const Jobs = () => {
               </div>
             ) : jobList.length !== 0 ? (
               jobList.map((job) => (
-                <Link
-                  to={`/jobs/${job._id}`}
-                  key={job._id}
-                  className={listCardUi}
-                >
-                  <p className="font-semibold text-gray-900 text-lg">
-                    {job?.title}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {job?.company} · {job?.location}
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-semibold">Created on</span> :{" "}
-                    {formatDate(job.createdAt)}
-                  </p>
+                <Link to={`/jobs/${job._id}`} key={job._id}>
+                  <motion.div
+                    layoutId={`job-${job._id}`}
+                    className={listCardUi}
+                  >
+                    <p className="font-semibold text-gray-900 text-lg">
+                      {job?.title}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {job?.company} · {job?.location}
+                    </p>
+                    <br />
+                    <p>
+                      <span className="font-semibold">Created on</span> :{" "}
+                      {formatDate(job.createdAt)}
+                    </p>
+                  </motion.div>
                 </Link>
               ))
             ) : (

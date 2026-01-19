@@ -5,6 +5,7 @@ import { formatDate } from "../Utils/formatDate";
 import { listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import PageTransition from "../Components/PageTransition";
+import { motion } from "framer-motion";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,26 +51,27 @@ const RecruiterDashboard = () => {
           ) : (
             <div className="grid grid-cols-1 gap-4">
               {jobs.map((job) => (
-                <Link
-                  to={`/recruiter/jobs/${job._id}`}
-                  key={job._id}
-                  className={listCardUi}
-                >
-                  <p className="font-semibold text-lg text-gray-900">
-                    {" "}
-                    {job.title}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {job.company} · {job.location}
-                  </p>
-                  <br />
-                  <p>
-                    <span className="font-semibold">Type</span> : {job.type}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Created on</span> :{" "}
-                    {formatDate(job.createdAt)}
-                  </p>
+                <Link to={`/recruiter/jobs/${job._id}`} key={job._id}>
+                  <motion.div
+                    layoutId={`job-${job._id}`}
+                    className={listCardUi}
+                  >
+                    <p className="font-semibold text-lg text-gray-900">
+                      {" "}
+                      {job.title}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {job.company} · {job.location}
+                    </p>
+                    <br />
+                    <p>
+                      <span className="font-semibold">Type</span> : {job.type}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Created on</span> :{" "}
+                      {formatDate(job.createdAt)}
+                    </p>
+                  </motion.div>
                 </Link>
               ))}
             </div>

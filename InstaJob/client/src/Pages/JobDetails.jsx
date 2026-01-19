@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { formatDate } from "../Utils/formatDate";
 import { buttonUi } from "../Utils/uiClasses";
+import { motion } from "framer-motion";
 import BackButton from "../Components/BackButton";
 import Loader from "../Components/Loader";
 import Skeleton from "../Components/Skeleton";
@@ -91,7 +92,10 @@ const JobDetails = () => {
   return (
     <PageTransition>
       <div className="min-h-screen bg-[#F8F9FA] text-gray-700 px-2 py-8 md:py-30">
-        <div className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-6xl mx-auto py-10">
+        <motion.div
+          layoutId={`job-${params.id}`}
+          className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-6xl mx-auto py-10"
+        >
           <BackButton />
           <div className="flex flex-col px-4 py-8">
             <>
@@ -108,9 +112,9 @@ const JobDetails = () => {
                 <h2>Job not Found</h2>
               ) : (
                 <>
-                  <h1 className="text-3xl font-semibold text-gray-900">
+                  <h3 className="text-3xl font-semibold text-gray-900">
                     {jobDetails?.title}
-                  </h1>
+                  </h3>
                   <p className=" mb-6 text-sm text-gray-500">
                     {jobDetails?.location}
                   </p>
@@ -191,7 +195,7 @@ const JobDetails = () => {
               )}
             </>
           </div>
-        </div>
+        </motion.div>
       </div>
     </PageTransition>
   );

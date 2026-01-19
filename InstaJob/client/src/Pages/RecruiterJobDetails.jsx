@@ -8,6 +8,7 @@ import { listCardUi, statusButtonUi } from "../Utils/uiClasses";
 import BackButton from "../Components/BackButton";
 import Skeleton from "../Components/Skeleton";
 import PageTransition from "../Components/PageTransition";
+import { motion } from "framer-motion";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -63,7 +64,10 @@ const RecruiterJobDetails = () => {
   return (
     <PageTransition>
       <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <motion.div
+          layoutId={`job-${params.id}`}
+          className="max-w-4xl mx-auto px-4 py-8"
+        >
           <div className=" flex items-center gap-4 mb-6 ">
             <BackButton />
             <div className="w-full">
@@ -119,6 +123,7 @@ const RecruiterJobDetails = () => {
               </div>
             )}
           </div>
+
           <div>
             <h2 className="text-md font-semibold text-gray-900">
               Applications ({applications.length})
@@ -203,7 +208,7 @@ const RecruiterJobDetails = () => {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </PageTransition>
   );
