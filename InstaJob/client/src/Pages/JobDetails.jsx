@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { formatDate } from "../Utils/formatDate";
 import { buttonUi } from "../Utils/uiClasses";
-import { motion } from "framer-motion";
+import { delay, motion } from "framer-motion";
 import BackButton from "../Components/BackButton";
 import Loader from "../Components/Loader";
 import Skeleton from "../Components/Skeleton";
@@ -111,7 +111,11 @@ const JobDetails = () => {
               ) : !jobDetails ? (
                 <h2>Job not Found</h2>
               ) : (
-                <>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
                   <h3 className="text-3xl font-semibold text-gray-900">
                     {jobDetails?.title}
                   </h3>
@@ -137,7 +141,7 @@ const JobDetails = () => {
                       {formatDate(jobDetails.createdAt)}
                     </li>
                   </ul>
-                </>
+                </motion.div>
               )}
 
               {user?.role === "applicant" && !hasApplied && (
@@ -146,7 +150,12 @@ const JobDetails = () => {
                     Resume (PDF only)
                   </span>
 
-                  <div className="mt-2 flex items-center justify-center w-full">
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="mt-2 flex items-center justify-center w-full"
+                  >
                     <label
                       htmlFor="resume"
                       className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
@@ -168,7 +177,7 @@ const JobDetails = () => {
                         onChange={handleResumeChange}
                       />
                     </label>
-                  </div>
+                  </motion.div>
                 </label>
               )}
 

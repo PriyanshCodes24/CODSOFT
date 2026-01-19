@@ -86,7 +86,12 @@ const RecruiterJobDetails = () => {
               )}
             </div>
           </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-4 mb-8 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white border border-gray-200 rounded-lg p-4 mb-8 shadow-sm"
+          >
             <h2 className="text-base font-semibold text-gray-900 mb-2">
               Job Overview
             </h2>
@@ -122,9 +127,13 @@ const RecruiterJobDetails = () => {
                 </p>
               </div>
             )}
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
             <h2 className="text-md font-semibold text-gray-900">
               Applications ({applications.length})
             </h2>
@@ -207,7 +216,7 @@ const RecruiterJobDetails = () => {
                 ))}
               </div>
             )}
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </PageTransition>
