@@ -93,6 +93,8 @@ const JobDetails = () => {
     <PageTransition>
       <div className="min-h-screen bg-[#F8F9FA] text-gray-700 px-2 py-8 md:py-30">
         <motion.div
+          initial={{ scale: 0.98 }}
+          animate={{ scale: 1 }}
           layoutId={`job-${params.id}`}
           className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-6xl mx-auto py-10"
         >
@@ -123,6 +125,8 @@ const JobDetails = () => {
                     {jobDetails?.location}
                   </p>
 
+                  {/* job detais */}
+
                   <ul className="space-y-4">
                     <li>
                       <span className="font-bold">Company :</span>{" "}
@@ -144,6 +148,8 @@ const JobDetails = () => {
                 </motion.div>
               )}
 
+              {/* Resume upload */}
+
               {user?.role === "applicant" && !hasApplied && (
                 <label className="block mt-5">
                   <span className="text-sm font-medium text-gray-700">
@@ -158,7 +164,9 @@ const JobDetails = () => {
                   >
                     <label
                       htmlFor="resume"
-                      className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition"
+                      className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed  rounded-lg cursor-pointer  transition
+                          ${resume ? "border-green-400 bg-green-50 " : "border-gray-300 bg-gray-50 hover:bg-gray-100"}
+                        `}
                     >
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <p className="text-sm text-gray-600">
@@ -180,6 +188,8 @@ const JobDetails = () => {
                   </motion.div>
                 </label>
               )}
+
+              {/* apply button */}
 
               {user?.role === "applicant" && (
                 <div className="flex justify-center mt-4">
