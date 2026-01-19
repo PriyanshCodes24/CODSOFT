@@ -7,6 +7,7 @@ import { formatDate } from "../Utils/formatDate";
 import { listCardUi, statusButtonUi } from "../Utils/uiClasses";
 import BackButton from "../Components/BackButton";
 import Skeleton from "../Components/Skeleton";
+import PageTransition from "../Components/PageTransition";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -30,7 +31,7 @@ const RecruiterJobDetails = () => {
     try {
       setApplicationsLoading(true);
       const response = await api.get(
-        `/applications/recruiter/get/${params.id}`
+        `/applications/recruiter/get/${params.id}`,
       );
       console.log(response);
 
@@ -60,149 +61,151 @@ const RecruiterJobDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className=" flex items-center gap-4 mb-6 ">
-          <BackButton />
-          <div className="w-full">
+    <PageTransition>
+      <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className=" flex items-center gap-4 mb-6 ">
+            <BackButton />
+            <div className="w-full">
+              {jobLoading ? (
+                <>
+                  <Skeleton className="h-5 w-1/2" />
+                  <Skeleton className="mt-2 h-4 w-1/3" />
+                </>
+              ) : (
+                <>
+                  <h1 className="text-lg font-semibold text-gray-900">
+                    {jobDetails?.title}
+                  </h1>
+                  <p className="text-sm ">{jobDetails?.location}</p>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="bg-white border border-gray-200 rounded-lg p-4 mb-8 shadow-sm">
+            <h2 className="text-base font-semibold text-gray-900 mb-2">
+              Job Overview
+            </h2>
+
             {jobLoading ? (
-              <>
-                <Skeleton className="h-5 w-1/2" />
-                <Skeleton className="mt-2 h-4 w-1/3" />
-              </>
+              <div className="space-y-3">
+                <Skeleton className="h-4 w-1/2 " />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/3 " />
+                <Skeleton className="h-4 w-1/2 " />
+              </div>
+            ) : !jobDetails ? (
+              <p className="text-sm text-gray-500">
+                Job Details could not be fetched!
+              </p>
             ) : (
-              <>
-                <h1 className="text-lg font-semibold text-gray-900">
+              <div className=" space-y-1 text-sm">
+                <p>
+                  <span className="font-medium">Company: </span>
+                  {jobDetails?.company}
+                </p>
+                <p>
+                  <span className="font-medium">Title: </span>
                   {jobDetails?.title}
-                </h1>
-                <p className="text-sm ">{jobDetails?.location}</p>
-              </>
+                </p>
+                <p>
+                  <span className="font-medium">Location: </span>
+                  {jobDetails?.location}
+                </p>
+                <p>
+                  <span className="font-medium">Type: </span>
+                  {jobDetails?.type}
+                </p>
+              </div>
+            )}
+          </div>
+          <div>
+            <h2 className="text-md font-semibold text-gray-900">
+              Applications ({applications.length})
+            </h2>
+            <p className="mb-4 text-sm text-gray-500">
+              Review and manage applications for this job
+            </p>
+
+            {applicationsLoading ? (
+              <div className="space-y-4">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className={listCardUi}>
+                    <Skeleton className="h-23 w-2/3 mb-2" />
+                    <Skeleton className="h-4 w-1/3 " />
+                  </div>
+                ))}
+              </div>
+            ) : applications.length === 0 ? (
+              <p className="text-sm text-gray-500">No Applications yet</p>
+            ) : (
+              <div className="bg-white grid grid-cols-1 gap-4">
+                {applications.map((application) => (
+                  <div
+                    key={application._id}
+                    className="border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md"
+                  >
+                    <p>
+                      <span className="font-semibold">Name: </span>{" "}
+                      {application?.applicant?.name}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Email: </span>{" "}
+                      {application?.applicant?.email}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Date: </span>{" "}
+                      {formatDate(application?.createdAt)}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Status: </span>{" "}
+                      <StatusBadge status={application.status} />
+                    </p>
+                    <a
+                      href={`http://localhost:2000/${application.resume}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-600 underline text-sm"
+                    >
+                      Download Resume
+                    </a>
+
+                    <div className="flex gap-x-2 mt-2">
+                      {application.status === "pending" && (
+                        <button
+                          onClick={() => {
+                            changeStatus("accepted", application._id);
+                          }}
+                          disabled={applicationsLoading}
+                          className={`${statusButtonUi} bg-green-600 hover:bg-green-700 ${
+                            applicationsLoading && "opacity-60"
+                          }`}
+                        >
+                          Accept
+                        </button>
+                      )}
+                      {application.status === "pending" && (
+                        <button
+                          onClick={() => {
+                            changeStatus("rejected", application._id);
+                          }}
+                          disabled={applicationsLoading}
+                          className={`${statusButtonUi} bg-red-600 hover:bg-red-700 ${
+                            applicationsLoading && "opacity-60"
+                          }`}
+                        >
+                          Reject
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </div>
-        <div className="bg-white border border-gray-200 rounded-lg p-4 mb-8 shadow-sm">
-          <h2 className="text-base font-semibold text-gray-900 mb-2">
-            Job Overview
-          </h2>
-
-          {jobLoading ? (
-            <div className="space-y-3">
-              <Skeleton className="h-4 w-1/2 " />
-              <Skeleton className="h-4 w-3/4" />
-              <Skeleton className="h-4 w-1/3 " />
-              <Skeleton className="h-4 w-1/2 " />
-            </div>
-          ) : !jobDetails ? (
-            <p className="text-sm text-gray-500">
-              Job Details could not be fetched!
-            </p>
-          ) : (
-            <div className=" space-y-1 text-sm">
-              <p>
-                <span className="font-medium">Company: </span>
-                {jobDetails?.company}
-              </p>
-              <p>
-                <span className="font-medium">Title: </span>
-                {jobDetails?.title}
-              </p>
-              <p>
-                <span className="font-medium">Location: </span>
-                {jobDetails?.location}
-              </p>
-              <p>
-                <span className="font-medium">Type: </span>
-                {jobDetails?.type}
-              </p>
-            </div>
-          )}
-        </div>
-        <div>
-          <h2 className="text-md font-semibold text-gray-900">
-            Applications ({applications.length})
-          </h2>
-          <p className="mb-4 text-sm text-gray-500">
-            Review and manage applications for this job
-          </p>
-
-          {applicationsLoading ? (
-            <div className="space-y-4">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className={listCardUi}>
-                  <Skeleton className="h-23 w-2/3 mb-2" />
-                  <Skeleton className="h-4 w-1/3 " />
-                </div>
-              ))}
-            </div>
-          ) : applications.length === 0 ? (
-            <p className="text-sm text-gray-500">No Applications yet</p>
-          ) : (
-            <div className="bg-white grid grid-cols-1 gap-4">
-              {applications.map((application) => (
-                <div
-                  key={application._id}
-                  className="border border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md"
-                >
-                  <p>
-                    <span className="font-semibold">Name: </span>{" "}
-                    {application?.applicant?.name}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Email: </span>{" "}
-                    {application?.applicant?.email}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Date: </span>{" "}
-                    {formatDate(application?.createdAt)}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Status: </span>{" "}
-                    <StatusBadge status={application.status} />
-                  </p>
-                  <a
-                    href={`http://localhost:2000/${application.resume}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-blue-600 underline text-sm"
-                  >
-                    Download Resume
-                  </a>
-
-                  <div className="flex gap-x-2 mt-2">
-                    {application.status === "pending" && (
-                      <button
-                        onClick={() => {
-                          changeStatus("accepted", application._id);
-                        }}
-                        disabled={applicationsLoading}
-                        className={`${statusButtonUi} bg-green-600 hover:bg-green-700 ${
-                          applicationsLoading && "opacity-60"
-                        }`}
-                      >
-                        Accept
-                      </button>
-                    )}
-                    {application.status === "pending" && (
-                      <button
-                        onClick={() => {
-                          changeStatus("rejected", application._id);
-                        }}
-                        disabled={applicationsLoading}
-                        className={`${statusButtonUi} bg-red-600 hover:bg-red-700 ${
-                          applicationsLoading && "opacity-60"
-                        }`}
-                      >
-                        Reject
-                      </button>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
-    </div>
+    </PageTransition>
   );
 };
 

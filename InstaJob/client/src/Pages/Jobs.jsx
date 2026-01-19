@@ -8,6 +8,7 @@ import { formatDate } from "../Utils/formatDate";
 import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import EmptyState from "../Components/EmptyState";
+import PageTransition from "../Components/PageTransition";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -72,96 +73,98 @@ const Jobs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-gray-700 ">
-      <div className="max-w-6xl px-4 py-8 mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Job Listings</h1>
+    <PageTransition>
+      <div className="min-h-screen bg-[#F8F9FA] text-gray-700 ">
+        <div className="max-w-6xl px-4 py-8 mx-auto">
+          <h1 className="text-2xl font-bold mb-4">Job Listings</h1>
 
-        <div
-          id="jobs-search-placeholder"
-          className=" sticky top-0 z-50 bg-[#F8F9FA] py-2 shadow-md rounded-md mb-6"
-        >
-          <form
-            className="flex flex-wrap sm:flex-nowrap gap-2 px-2 items-stretch"
-            onSubmit={handleSubmit}
+          <div
+            id="jobs-search-placeholder"
+            className=" sticky top-0 z-50 bg-[#F8F9FA] py-2 shadow-md rounded-md mb-6"
           >
-            <input
-              id="job-title"
-              type="text"
-              aria-label="Job Title"
-              name="q"
-              className="focus:outline-none border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 flex-1 min-w-0 w-full"
-              placeholder="Job Title"
-              value={title}
-              onChange={handleTitle}
-            />
-            <input
-              id="job-location"
-              type="text"
-              aria-label="Job Location"
-              name="loc"
-              className="focus:outline-none border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 w-full sm:w-40"
-              placeholder="Job Location"
-              value={location}
-              onChange={handleLocation}
-            />
-            <button
-              aria-label="Search"
-              className={`w-full ${buttonUi} h-10 sm:h-12 sm:w-12 flex items-center justify-center sm:ml-0 ${
-                searchLoading ? "opacity-60" : "cursor-pointer"
-              }`}
-              type="submit"
-              disabled={searchLoading}
+            <form
+              className="flex flex-wrap sm:flex-nowrap gap-2 px-2 items-stretch"
+              onSubmit={handleSubmit}
             >
-              {!searchLoading ? <FaSearch /> : <Loading />}
-            </button>
-          </form>
-        </div>
-
-        <div id="jobs-list" className="grid grid-cols-1 gap-4">
-          {searchLoading ? (
-            <div className="space-y-4">
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className={listCardUi}>
-                  <Skeleton className="h-5 w-2/3 mb-2" />
-                  <Skeleton className="h-4 w-1/3" />
-                  <Skeleton className="mt-8 h-4 w-1/2" />
-                </div>
-              ))}
-            </div>
-          ) : jobList.length !== 0 ? (
-            jobList.map((job) => (
-              <Link
-                to={`/jobs/${job._id}`}
-                key={job._id}
-                className={listCardUi}
+              <input
+                id="job-title"
+                type="text"
+                aria-label="Job Title"
+                name="q"
+                className="focus:outline-none border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 flex-1 min-w-0 w-full"
+                placeholder="Job Title"
+                value={title}
+                onChange={handleTitle}
+              />
+              <input
+                id="job-location"
+                type="text"
+                aria-label="Job Location"
+                name="loc"
+                className="focus:outline-none border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 w-full sm:w-40"
+                placeholder="Job Location"
+                value={location}
+                onChange={handleLocation}
+              />
+              <button
+                aria-label="Search"
+                className={`w-full ${buttonUi} h-10 sm:h-12 sm:w-12 flex items-center justify-center sm:ml-0 ${
+                  searchLoading ? "opacity-60" : "cursor-pointer"
+                }`}
+                type="submit"
+                disabled={searchLoading}
               >
-                <p className="font-semibold text-gray-900 text-lg">
-                  {job?.title}
-                </p>
-                <p className="text-sm text-gray-500">
-                  {job?.company} · {job?.location}
-                </p>
-                <br />
-                <p>
-                  <span className="font-semibold">Created on</span> :{" "}
-                  {formatDate(job.createdAt)}
-                </p>
-              </Link>
-            ))
-          ) : (
-            <EmptyState
-              title="No jobs found"
-              description="Try changing keywords or removing filters"
-              action={
-                <Link to="/jobs" className={`px-4 ${buttonUi}`}>
-                  Clear filters
+                {!searchLoading ? <FaSearch /> : <Loading />}
+              </button>
+            </form>
+          </div>
+
+          <div id="jobs-list" className="grid grid-cols-1 gap-4">
+            {searchLoading ? (
+              <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className={listCardUi}>
+                    <Skeleton className="h-5 w-2/3 mb-2" />
+                    <Skeleton className="h-4 w-1/3" />
+                    <Skeleton className="mt-8 h-4 w-1/2" />
+                  </div>
+                ))}
+              </div>
+            ) : jobList.length !== 0 ? (
+              jobList.map((job) => (
+                <Link
+                  to={`/jobs/${job._id}`}
+                  key={job._id}
+                  className={listCardUi}
+                >
+                  <p className="font-semibold text-gray-900 text-lg">
+                    {job?.title}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {job?.company} · {job?.location}
+                  </p>
+                  <br />
+                  <p>
+                    <span className="font-semibold">Created on</span> :{" "}
+                    {formatDate(job.createdAt)}
+                  </p>
                 </Link>
-              }
-            />
-          )}
+              ))
+            ) : (
+              <EmptyState
+                title="No jobs found"
+                description="Try changing keywords or removing filters"
+                action={
+                  <Link to="/jobs" className={`px-4 ${buttonUi}`}>
+                    Clear filters
+                  </Link>
+                }
+              />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </PageTransition>
   );
 };
 
