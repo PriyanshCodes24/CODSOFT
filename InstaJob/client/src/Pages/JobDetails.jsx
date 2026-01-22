@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { formatDate } from "../Utils/formatDate";
 import { buttonUi } from "../Utils/uiClasses";
-import { delay, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import BackButton from "../Components/BackButton";
 import Loader from "../Components/Loader";
 import Skeleton from "../Components/Skeleton";
@@ -96,7 +96,7 @@ const JobDetails = () => {
           initial={{ scale: 0.98 }}
           animate={{ scale: 1 }}
           layoutId={`job-${params.id}`}
-          className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-6xl mx-auto py-10"
+          className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-5xl mx-auto py-10"
         >
           <BackButton />
           <div className="flex flex-col px-4 py-8">

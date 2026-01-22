@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
 import { formatDate } from "../Utils/formatDate";
-import { listCardUi } from "../Utils/uiClasses";
+import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import PageTransition from "../Components/PageTransition";
 import { motion } from "framer-motion";
+import EmptyState from "../Components/EmptyState";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +33,13 @@ const RecruiterDashboard = () => {
     <PageTransition>
       <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
         <div className="max-w-4xl px-4 py-8 mx-auto">
-          <h1 className="text-center text-3xl mb-8 font-bold">Jobs Posted</h1>
+          <div className="text-center mb-8 ">
+            <h1 className="text-3xl font-bold text-gray-900">Jobs Posted</h1>
+            <p className="text-gray-500 text-sm mt-1">
+              Track the jobs you've posted
+            </p>
+          </div>
+
           {isLoading ? (
             <div className="space-y-4">
               {[...Array(4)].map((_, i) => (
@@ -45,9 +52,15 @@ const RecruiterDashboard = () => {
               ))}
             </div>
           ) : jobs.length === 0 ? (
-            <p className="text-center text-sm text-gray-500">
-              No jobs posted yet!
-            </p>
+            <EmptyState
+              title="No jobs posted yet!"
+              description="Once you post jobs, thehy will appear here"
+              action={
+                <Link to="/post" className={`px-6 ${buttonUi}`}>
+                  Post a job
+                </Link>
+              }
+            />
           ) : (
             <div className="grid grid-cols-1 gap-4">
               {jobs.map((job) => (
