@@ -20,6 +20,13 @@ const ApplicationSection = ({ title, items }) => {
             <Link to={`/jobs/${application.job._id}`} key={application._id}>
               <motion.div
                 layoutId={`job-${application.job._id}`}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 20,
+                }}
                 className={listCardUi}
               >
                 <h3 className="font-semibold text-gray-900 text-lg">

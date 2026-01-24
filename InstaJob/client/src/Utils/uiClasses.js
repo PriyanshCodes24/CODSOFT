@@ -1,5 +1,5 @@
 export const listCardUi =
-  "bg-white p-4 text-gray-600  cursor-pointer border border-gray-200 shadow-sm rounded-lg hover:shadow-md transition-all duration-200 hover:-translate-y-[1px] focus-visible:ring-[#22333B]";
+  "bg-white p-4 text-gray-600 cursor-pointer border border-gray-200 shadow-sm rounded-lg hover:shadow-md focus-visible:ring-[#22333B]";
 
 export const buttonUi =
   " py-2 bg-[#22333B] focus:bg-[#233c4d] hover:shadow-lg hover:bg-[#233c4d] text-white border-0 rounded-md transition-all duration-200 active:scale-95";

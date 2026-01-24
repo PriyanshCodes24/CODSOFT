@@ -61,19 +61,6 @@ const ApplicantDashboard = () => {
             </p>
           </div>
 
-          {/* filter */}
-          {/* <div className="mb-2">
-            <select
-              onChange={handleFilter}
-              className="text-center text-gray-500 bg-white rounded-md border border-gray-200"
-            >
-              <option value="">Filter</option>
-              <option value="pending">Pending</option>
-              <option value="accepted">Accepted</option>
-              <option value="rejected">Rejected</option>
-            </select>
-          </div> */}
-
           {/* applications */}
           {applicationsLoading ? (
             <div className="space-y-4">
@@ -97,43 +84,6 @@ const ApplicantDashboard = () => {
               }
             />
           ) : (
-            // <>
-            //   <div className="grid grid-cols-1 gap-4">
-            //     {applications.map((application) => {
-            //       if (!application.job) {
-            //         return null;
-            //       }
-            //       return (
-            //         <Link
-            //           to={`/jobs/${application.job._id}`}
-            //           key={application._id}
-            //         >
-            //           <motion.div
-            //             layoutId={`job-${application.job._id}`}
-            //             className={listCardUi}
-            //           >
-            //             <h3 className="font-semibold text-gray-900 text-lg">
-            //               {application?.job?.title}
-            //             </h3>
-            //             <p className="text-sm text-gray-500">
-            //               {application?.job?.company} ·{" "}
-            //               {application?.job?.location}
-            //             </p>
-            //             <br />
-            //             <p>
-            //               <span className="font-semibold">Applied on</span> :{" "}
-            //               {formatDate(application?.createdAt)}
-            //             </p>
-            //             <p>
-            //               <span className="font-semibold">Status</span> :{" "}
-            //               <StatusBadge status={application.status} />
-            //             </p>
-            //           </motion.div>
-            //         </Link>
-            //       );
-            //     })}
-            //   </div>
-            // </>
             <>
               <ApplicationSection
                 title="Pending Applications"
