@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+import { motion } from "framer-motion";
 
 const HomeHero = () => {
   const { user } = useAuth();
@@ -16,12 +17,15 @@ const HomeHero = () => {
           everything you need in one place.
         </p>
         <div className="mt-8 flex justify-center gap-4">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
             className="bg-[#22333B] hover:bg-[#2F4450] transition text-white px-6 py-3 font-medium shadow-sm hover:shadow-md rounded-lg cursor-pointer"
             onClick={() => navigate("/jobs")}
           >
             Browse Jobs
-          </button>
+          </motion.button>
           {!user && (
             <button
               className="border border-[#22333B] text-[#22333B] hover:bg-[#22333B] hover:text-white transition px-6 py-3 font-medium rounded-lg cursor-pointer"

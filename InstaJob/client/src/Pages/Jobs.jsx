@@ -10,6 +10,7 @@ import Skeleton from "../Components/Skeleton";
 import EmptyState from "../Components/EmptyState";
 import PageTransition from "../Components/PageTransition";
 import List from "../Components/List";
+import { motion } from "framer-motion";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -105,7 +106,10 @@ const Jobs = () => {
                 value={location}
                 onChange={handleLocation}
               />
-              <button
+              <motion.button
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 aria-label="Search"
                 className={`w-full ${buttonUi} h-10 sm:h-12 sm:w-12 flex items-center justify-center sm:ml-0 ${
                   searchLoading ? "opacity-60" : "cursor-pointer"
@@ -114,7 +118,7 @@ const Jobs = () => {
                 disabled={searchLoading}
               >
                 {!searchLoading ? <FaSearch /> : <Loading />}
-              </button>
+              </motion.button>
             </form>
           </div>
 

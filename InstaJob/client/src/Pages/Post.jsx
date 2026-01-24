@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { buttonUi } from "../Utils/uiClasses";
 import BackButton from "../Components/BackButton";
 import Loader from "../Components/Loader";
+import { motion } from "framer-motion";
 
 const Post = () => {
   const [title, setTitle] = useState("");
@@ -131,7 +132,14 @@ const Post = () => {
               onChange={handleDescriptionChange}
             />
           </div>
-          <button
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 25,
+            }}
             type="submit"
             disabled={isLoading}
             className={`w-full p-3 mt-2 flex items-center justify-center gap-2 ${buttonUi} ${
@@ -140,7 +148,7 @@ const Post = () => {
           >
             {isLoading && <Loader />}
             {isLoading ? "Posting..." : "Post Job"}
-          </button>
+          </motion.button>
         </form>
       </div>
     </div>

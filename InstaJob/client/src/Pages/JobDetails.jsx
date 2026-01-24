@@ -196,9 +196,16 @@ const JobDetails = () => {
                   {hasApplied ? (
                     <p className="text-green-600 mt-4">Application submitted</p>
                   ) : (
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 25,
+                      }}
                       className={`
-                    px-8 mt-6  font-semibold flex items-center justify-center gap-2
+                    px-8 mt-6 font-semibold flex items-center justify-center gap-2
                     ${buttonUi}
                     ${
                       applyLoading || !resume ? "opacity-60" : "cursor-pointer"
@@ -208,7 +215,7 @@ const JobDetails = () => {
                     >
                       {applyLoading && <Loader />}
                       {applyLoading ? "Applying..." : "Apply"}
-                    </button>
+                    </motion.button>
                   )}
                 </div>
               )}

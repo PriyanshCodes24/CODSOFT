@@ -186,7 +186,14 @@ const RecruiterJobDetails = () => {
 
                     <div className="flex gap-x-2 mt-2">
                       {application.status === "pending" && (
-                        <button
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 25,
+                          }}
                           onClick={() => {
                             changeStatus("accepted", application._id);
                           }}
@@ -196,10 +203,17 @@ const RecruiterJobDetails = () => {
                           }`}
                         >
                           Accept
-                        </button>
+                        </motion.button>
                       )}
                       {application.status === "pending" && (
-                        <button
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 25,
+                          }}
                           onClick={() => {
                             changeStatus("rejected", application._id);
                           }}
@@ -209,7 +223,7 @@ const RecruiterJobDetails = () => {
                           }`}
                         >
                           Reject
-                        </button>
+                        </motion.button>
                       )}
                     </div>
                   </div>
