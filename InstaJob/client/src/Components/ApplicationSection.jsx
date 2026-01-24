@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { listCardUi } from "../Utils/uiClasses";
 import { formatDate } from "../Utils/formatDate";
 import StatusBadge from "./StatusBadge";
 import List from "./List";

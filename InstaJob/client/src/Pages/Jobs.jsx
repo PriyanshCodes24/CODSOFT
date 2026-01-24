@@ -79,10 +79,8 @@ const Jobs = () => {
         <div className="max-w-6xl px-4 py-8 mx-auto">
           <h1 className="text-2xl font-bold mb-4">Job Listings</h1>
 
-          <div
-            id="jobs-search-placeholder"
-            className=" sticky top-0 z-50 bg-[#F8F9FA] py-2 shadow-md rounded-md mb-6"
-          >
+          {/* search filter */}
+          <div className=" sticky top-0 z-50 bg-[#F8F9FA] py-2 shadow-md rounded-md mb-6">
             <form
               className="flex flex-wrap sm:flex-nowrap gap-2 px-2 items-stretch"
               onSubmit={handleSubmit}
@@ -120,6 +118,7 @@ const Jobs = () => {
             </form>
           </div>
 
+          {/* job list */}
           <div id="jobs-list" className="grid grid-cols-1 gap-4">
             {searchLoading ? (
               <div className="space-y-4">
