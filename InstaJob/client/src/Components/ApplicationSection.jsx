@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { listCardUi } from "../Utils/uiClasses";
 import { formatDate } from "../Utils/formatDate";
 import StatusBadge from "./StatusBadge";
+import List from "./List";
 
 const ApplicationSection = ({ title, items }) => {
   if (items.length === 0) return null;
@@ -18,17 +19,7 @@ const ApplicationSection = ({ title, items }) => {
           }
           return (
             <Link to={`/jobs/${application.job._id}`} key={application._id}>
-              <motion.div
-                layoutId={`job-${application.job._id}`}
-                whileHover={{ y: -4 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20,
-                }}
-                className={listCardUi}
-              >
+              <List jobid={application.job._id}>
                 <h3 className="font-semibold text-gray-900 text-lg">
                   {application?.job?.title}
                 </h3>
@@ -45,7 +36,7 @@ const ApplicationSection = ({ title, items }) => {
                     <StatusBadge status={application.status} />
                   </p>
                 </div>
-              </motion.div>
+              </List>
             </Link>
           );
         })}

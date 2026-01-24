@@ -5,8 +5,8 @@ import { formatDate } from "../Utils/formatDate";
 import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import PageTransition from "../Components/PageTransition";
-import { motion, scale } from "framer-motion";
 import EmptyState from "../Components/EmptyState";
+import List from "../Components/List";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,17 +65,7 @@ const RecruiterDashboard = () => {
             <div className="grid grid-cols-1 gap-4">
               {jobs.map((job) => (
                 <Link to={`/recruiter/jobs/${job._id}`} key={job._id}>
-                  <motion.div
-                    whileHover={{ y: -4 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20,
-                    }}
-                    layoutId={`job-${job._id}`}
-                    className={listCardUi}
-                  >
+                  <List jobid={job._id}>
                     <p className="font-semibold text-lg text-gray-900">
                       {" "}
                       {job.title}
@@ -91,7 +81,7 @@ const RecruiterDashboard = () => {
                       <span className="font-semibold">Created on</span> :{" "}
                       {formatDate(job.createdAt)}
                     </p>
-                  </motion.div>
+                  </List>
                 </Link>
               ))}
             </div>

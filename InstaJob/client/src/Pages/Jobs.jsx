@@ -9,7 +9,7 @@ import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import EmptyState from "../Components/EmptyState";
 import PageTransition from "../Components/PageTransition";
-import { motion, spring } from "framer-motion";
+import List from "../Components/List";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -131,20 +131,20 @@ const Jobs = () => {
                   </div>
                 ))}
               </div>
-            ) : jobList.length !== 0 ? (
+            ) : jobList.length === 0 ? (
+              <EmptyState
+                title="No jobs found"
+                description="Try changing keywords or removing filters"
+                action={
+                  <Link to="/jobs" className={`px-4 ${buttonUi}`}>
+                    Clear filters
+                  </Link>
+                }
+              />
+            ) : (
               jobList.map((job) => (
                 <Link to={`/jobs/${job._id}`} key={job._id}>
-                  <motion.div
-                    whileHover={{ y: -4 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{
-                      type: "spring",
-                      stiffness:300,
-                      damping:20
-                    }}
-                    layoutId={`job-${job._id}`}
-                    className={listCardUi}
-                  >
+                  <List jobid={job._id}>
                     <p className="font-semibold text-gray-900 text-lg">
                       {job?.title}
                     </p>
@@ -156,19 +156,9 @@ const Jobs = () => {
                       <span className="font-semibold">Created on</span> :{" "}
                       {formatDate(job.createdAt)}
                     </p>
-                  </motion.div>
+                  </List>
                 </Link>
               ))
-            ) : (
-              <EmptyState
-                title="No jobs found"
-                description="Try changing keywords or removing filters"
-                action={
-                  <Link to="/jobs" className={`px-4 ${buttonUi}`}>
-                    Clear filters
-                  </Link>
-                }
-              />
             )}
           </div>
         </div>
