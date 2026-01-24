@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
-import StatusBadge from "../Components/StatusBadge";
-import { formatDate } from "../Utils/formatDate";
 import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import EmptyState from "../Components/EmptyState";
 import PageTransition from "../Components/PageTransition";
-import { motion } from "framer-motion";
 import ApplicationSection from "../Components/ApplicationSection";
 
 const ApplicantDashboard = () => {
   const [applications, setApplications] = useState([]);
   const [applicationsLoading, setApplicationsLoading] = useState(false);
-  const [filter, setFilter] = useState();
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -31,11 +27,6 @@ const ApplicantDashboard = () => {
     };
     fetchApplications();
   }, []);
-
-  const handleFilter = (e) => {
-    console.log(e.target.value);
-    setFilter(e.target.value);
-  };
 
   const pendingApps = applications.filter(
     (app) => app.status === "pending" && app.job,

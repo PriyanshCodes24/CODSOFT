@@ -9,7 +9,7 @@ import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import EmptyState from "../Components/EmptyState";
 import PageTransition from "../Components/PageTransition";
-import { motion } from "framer-motion";
+import { motion, spring } from "framer-motion";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -135,6 +135,13 @@ const Jobs = () => {
               jobList.map((job) => (
                 <Link to={`/jobs/${job._id}`} key={job._id}>
                   <motion.div
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      type: "spring",
+                      stiffness:300,
+                      damping:20
+                    }}
                     layoutId={`job-${job._id}`}
                     className={listCardUi}
                   >

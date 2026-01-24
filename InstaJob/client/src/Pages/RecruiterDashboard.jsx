@@ -5,7 +5,7 @@ import { formatDate } from "../Utils/formatDate";
 import { buttonUi, listCardUi } from "../Utils/uiClasses";
 import Skeleton from "../Components/Skeleton";
 import PageTransition from "../Components/PageTransition";
-import { motion } from "framer-motion";
+import { motion, scale } from "framer-motion";
 import EmptyState from "../Components/EmptyState";
 
 const RecruiterDashboard = () => {
@@ -66,6 +66,13 @@ const RecruiterDashboard = () => {
               {jobs.map((job) => (
                 <Link to={`/recruiter/jobs/${job._id}`} key={job._id}>
                   <motion.div
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20,
+                    }}
                     layoutId={`job-${job._id}`}
                     className={listCardUi}
                   >
