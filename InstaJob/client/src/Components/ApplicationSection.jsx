@@ -17,7 +17,7 @@ const ApplicationSection = ({ title, items }) => {
           }
           return (
             <Link to={`/jobs/${application.job._id}`} key={application._id}>
-              <List jobid={application.job._id}>
+              <List>
                 <h3 className="font-semibold text-gray-900 text-lg">
                   {application?.job?.title}
                 </h3>

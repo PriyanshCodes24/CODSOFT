@@ -92,12 +92,7 @@ const JobDetails = () => {
   return (
     <PageTransition>
       <div className="min-h-screen bg-[#F8F9FA] text-gray-700 px-2 py-8 md:py-30">
-        <motion.div
-          initial={{ scale: 0.98 }}
-          animate={{ scale: 1 }}
-          layoutId={`job-${params.id}`}
-          className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-5xl mx-auto py-10"
-        >
+        <motion.div className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-5xl mx-auto py-10">
           <BackButton />
           <div className="flex flex-col px-4 py-8">
             <>
@@ -114,9 +109,9 @@ const JobDetails = () => {
                 <h2>Job not Found</h2>
               ) : (
                 <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2, delay: 0.05 }}
                 >
                   <h3 className="text-3xl font-semibold text-gray-900">
                     {jobDetails?.title}
@@ -157,9 +152,9 @@ const JobDetails = () => {
                   </span>
 
                   <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2, delay: 0.05 }}
                     className="mt-2 flex items-center justify-center w-full"
                   >
                     <label

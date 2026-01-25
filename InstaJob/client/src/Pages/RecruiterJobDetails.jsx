@@ -64,10 +64,7 @@ const RecruiterJobDetails = () => {
   return (
     <PageTransition>
       <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
-        <motion.div
-          layoutId={`job-${params.id}`}
-          className="max-w-4xl mx-auto px-4 py-8"
-        >
+        <motion.div className="max-w-4xl mx-auto px-4 py-8">
           <div className=" flex items-center gap-4 mb-6 ">
             <BackButton />
             <div className="w-full">
@@ -87,9 +84,9 @@ const RecruiterJobDetails = () => {
             </div>
           </div>
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.25 }}
             className="bg-white border border-gray-200 rounded-lg p-4 mb-8 shadow-sm"
           >
             <h2 className="text-base font-semibold text-gray-900 mb-2">
@@ -130,9 +127,9 @@ const RecruiterJobDetails = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2 }}
           >
             <h2 className="text-md font-semibold text-gray-900">
               Applications ({applications.length})
@@ -153,7 +150,13 @@ const RecruiterJobDetails = () => {
             ) : applications.length === 0 ? (
               <p className="text-sm text-gray-500">No Applications yet</p>
             ) : (
-              <div className="bg-white grid grid-cols-1 gap-4">
+              <motion.div
+                key="content"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white grid grid-cols-1 gap-4"
+              >
                 {applications.map((application) => (
                   <div
                     key={application._id}
@@ -228,7 +231,7 @@ const RecruiterJobDetails = () => {
                     </div>
                   </div>
                 ))}
-              </div>
+              </motion.div>
             )}
           </motion.div>
         </motion.div>

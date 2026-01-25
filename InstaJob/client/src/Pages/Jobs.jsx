@@ -147,7 +147,7 @@ const Jobs = () => {
             ) : (
               jobList.map((job) => (
                 <Link to={`/jobs/${job._id}`} key={job._id}>
-                  <List jobid={job._id}>
+                  <List>
                     <p className="font-semibold text-gray-900 text-lg">
                       {job?.title}
                     </p>

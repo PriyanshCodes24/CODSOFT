@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { listCardUi } from "../Utils/uiClasses";
 
-const ListUi = ({ jobid, children }) => {
+const ListUi = ({ children }) => {
   return (
     <motion.div
       whileHover={{ y: -4 }}
@@ -11,7 +11,6 @@ const ListUi = ({ jobid, children }) => {
         stiffness: 300,
         damping: 20,
       }}
-      layoutId={`job-${jobid}`}
       className={listCardUi}
     >
       {children}
