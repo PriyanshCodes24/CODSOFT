@@ -1,55 +1,52 @@
 
 # InstaJob
 
-A full-stack job portal where **recruiters can post jobs** and **applicants can browse and apply**, built with a clean UI and a simple, role-based workflow.
+InstaJob is a full-stack job portal web application built as part of my **CODSOFT Web Development Internship**.  
+It allows applicants to browse and apply for jobs, while recruiters can post jobs and manage applications.
 
-This project focuses on **core functionality**, clean separation of concerns, and a smooth user experience rather than over-engineering.
+The focus of this project was to build a **real-world workflow**, clean UI/UX, and proper role-based access.
 
 ---
 
 ## Features
 
-### Authentication
-
-* User registration & login using JWT
-* Role-based access (`applicant`, `recruiter`)
-* Persistent login using token storage
+### 🔐 Authentication & Authorization
+- User registration and login
+- JWT-based authentication
+- Role-based access control (Applicant / Recruiter)
+- Protected routes on frontend and backend
 
 ### Applicant
-
-* Browse all available jobs
-* Search jobs by title and location
-* View detailed job descriptions
-* Apply to jobs (only once per job)
-* Track applied jobs and application status from dashboard
+- Browse and search jobs by title and location
+- View detailed job descriptions
+- Apply to jobs with resume upload (PDF)
+- Track application status (Pending / Accepted / Rejected)
+- Personal dashboard to manage applications
 
 ### Recruiter
-
-* Post new job openings
-* View all jobs posted by them
-* View applications for each job
-* Accept or reject applications
+- Post new job listings
+- View jobs posted by them
+- View applicants for each job
+- Accept or reject applications
+- Recruiter-specific dashboard
 
 ---
 
 ## Tech Stack
 
 ### Frontend
-
-* React (Vite)
-* React Router
-* Axios
-* Tailwind CSS
-* Context API (Auth state)
-* React Hot Toast
+- React (Vite)
+- Tailwind CSS
+- React Router
+- Axios
+- Framer Motion (animations)
 
 ### Backend
-
-* Node.js
-* Express.js
-* MongoDB (Mongoose)
-* JWT Authentication
-* Role-based middleware
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT Authentication
+- Multer (resume upload)
 
 ---
 
@@ -66,7 +63,7 @@ This project focuses on **core functionality**, clean separation of concerns, an
 
 ## Environment Variables
 
-### Backend (`.env`)
+### Backend (`server/.env`)
 
 ```
 PORT=2000
@@ -74,7 +71,7 @@ MONGO_URI=your_mongodb_uri
 SECRET_KEY=your_jwt_secret
 ```
 
-### Frontend (`.env`)
+### Frontend (`client/.env`)
 
 ```
 VITE_API=http://localhost:2000/api
@@ -87,7 +84,7 @@ VITE_API=http://localhost:2000/api
 ### Backend
 
 ```bash
-cd backend
+cd server
 npm install
 npm run dev
 ```
@@ -102,25 +99,9 @@ npm run dev
 
 ---
 
-## Demo Roles
-
-You can register users manually and assign roles in the database:
-
-* **Applicant** → apply to jobs
-* **Recruiter** → post jobs and manage applications
-
----
-
-## Notes
-
-* This project prioritizes **clarity and correctness** over advanced features.
-* UI is intentionally kept minimal and professional.
-* Some enhancements (pagination, email notifications, analytics) are intentionally left out to keep scope focused.
-
-
----
-
 ## Author
 
-Built by **Priyansh Patel**
-Computer Engineering Student | Full-Stack Developer
+Priyansh Patel
+Web Developer Intern – CODSOFT
+
+GitHub: https://github.com/PriyanshCodes24
