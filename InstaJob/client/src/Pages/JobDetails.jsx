@@ -26,7 +26,7 @@ const JobDetails = () => {
       const response = await api.get(`/jobs/get/${params.id}`);
       setJobDetails(response.data.jobDetails);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setIsLoading(false);
@@ -36,10 +36,9 @@ const JobDetails = () => {
   const hasAlreadyApplied = async () => {
     try {
       const response = await api.get(`/jobs/hasApplied/${params.id}`);
-      console.log(response.data.hasApplied);
       setHasApplied(response.data.hasApplied);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.response?.data?.message || "Something went wrong");
     }
   };
@@ -82,7 +81,7 @@ const JobDetails = () => {
       setHasApplied(true);
       toast.success("Applied successfully");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.response?.data?.message || "Failed to apply");
     } finally {
       setApplyLoading(false);

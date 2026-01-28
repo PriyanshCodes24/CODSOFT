@@ -50,12 +50,11 @@ const Post = () => {
         description,
       };
 
-      const response = await api.post(`/jobs`, payload);
-      console.log(response);
+      await api.post(`/jobs`, payload);
       toast.success("job posted successfully");
       navigate("/recruiter/dashboard");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }

@@ -43,13 +43,12 @@ const Register = () => {
         email,
         password,
       };
-      const response = await api.post(`/auth/register`, payload);
-      console.log(response.data);
+      await api.post(`/auth/register`, payload);
 
       toast.success("User Registered successfully");
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error.response?.data?.message || "Registration failed");
     } finally {
       setIsLoading(false);

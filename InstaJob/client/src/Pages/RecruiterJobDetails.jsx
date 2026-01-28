@@ -23,7 +23,7 @@ const RecruiterJobDetails = () => {
       const response = await api.get(`/jobs/get/${params.id}`);
       setJobDetails(response.data.jobDetails);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setJobLoading(false);
     }
@@ -31,14 +31,14 @@ const RecruiterJobDetails = () => {
   const getApplications = async () => {
     try {
       setApplicationsLoading(true);
+
       const response = await api.get(
         `/applications/recruiter/get/${params.id}`,
       );
-      console.log(response);
 
       setApplications(response.data.applications);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setApplicationsLoading(false);
     }
@@ -52,11 +52,10 @@ const RecruiterJobDetails = () => {
   const changeStatus = async (status, id) => {
     try {
       const response = await api.patch(`applications/patch/${id}/${status}`);
-      console.log(response?.data);
       toast.success(response?.data?.message);
       await getApplications();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.data?.message || `application could not be ${status}`);
     }
   };

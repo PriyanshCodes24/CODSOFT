@@ -18,11 +18,9 @@ const RecruiterDashboard = () => {
       try {
         setIsLoading(true);
         const response = await api.get("/jobs/my-jobs");
-        console.log(response.data.jobs);
-
         setJobs(response.data.jobs);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setIsLoading(false);
       }

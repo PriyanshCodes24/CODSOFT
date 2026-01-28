@@ -37,7 +37,6 @@ const Login = () => {
         password,
       };
       const response = await api.post(`/auth/login`, payload);
-      console.log(response.data);
 
       localStorage.setItem("token", response.data.token);
 
@@ -45,7 +44,7 @@ const Login = () => {
       toast.success("User Logged In successfully");
       navigate("/jobs");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error.response?.data?.message || "Login failed");
     } finally {
       setIsLoading(false);

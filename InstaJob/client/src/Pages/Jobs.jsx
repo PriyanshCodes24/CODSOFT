@@ -39,7 +39,7 @@ const Jobs = () => {
 
       setSearchParams(params);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.response?.data?.message || "Something went wrong");
     }
   };
@@ -51,7 +51,7 @@ const Jobs = () => {
       const response = await api.get(`/jobs?${searchParams.toString()}`);
       setJobList(response.data.jobs);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error?.response?.data?.message || "Something went wrong");
     } finally {
       setSearchLoading(false);
