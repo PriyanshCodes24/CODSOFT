@@ -89,6 +89,43 @@ const postJob = async (req, res) => {
   }
 };
 
+const deleteJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      });
+    }
+
+    if (job.postedBy.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "Not authorized to delete this job",
+      });
+    }
+
+    await Application.deleteMany({ job: jobId });
+
+    await job.deleteOne();
+
+    res.status(200).json({
+      success: true,
+      message: "Job deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete the job",
+    });
+  }
+};
+
 const getMyJobs = async (req, res) => {
   try {
     const jobs = await Job.find({ postedBy: req.user.id });
@@ -129,4 +166,5 @@ module.exports = {
   postJob,
   getMyJobs,
   hasAlreadyApplied,
+  deleteJob,
 };

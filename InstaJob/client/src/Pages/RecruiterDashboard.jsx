@@ -8,6 +8,8 @@ import PageTransition from "../Components/PageTransition";
 import EmptyState from "../Components/EmptyState";
 import List from "../Components/List";
 import { AnimatePresence, motion } from "framer-motion";
+import { RiDeleteBin6Fill, RiDeleteBin6Line } from "react-icons/ri";
+import toast from "react-hot-toast";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +29,21 @@ const RecruiterDashboard = () => {
     };
     fetchJobs();
   }, []);
+
+  const handleDelete = async (jobId) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this job permanently",
+    );
+    if (!confirm) return;
+    try {
+      await api.delete(`/jobs/${jobId}`);
+      setJobs((prev) => prev.filter((job) => job._id !== jobId));
+      toast.success("Job deleted successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Failed to delete the Job");
+    }
+  };
 
   return (
     <PageTransition>
@@ -69,25 +86,42 @@ const RecruiterDashboard = () => {
                 className="grid grid-cols-1 gap-4"
               >
                 {jobs.map((job) => (
-                  <Link to={`/recruiter/jobs/${job._id}`} key={job._id}>
-                    <List>
-                      <p className="font-semibold text-lg text-gray-900">
-                        {" "}
-                        {job.title}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {job.company} · {job.location}
-                      </p>
-                      <br />
-                      <p>
-                        <span className="font-semibold">Type</span> : {job.type}
-                      </p>
-                      <p>
-                        <span className="font-semibold">Created on</span> :{" "}
-                        {formatDate(job.createdAt)}
-                      </p>
-                    </List>
-                  </Link>
+                  <List className="flex justify-between items-start">
+                    <Link
+                      className="flex-1"
+                      to={`/recruiter/jobs/${job._id}`}
+                      key={job._id}
+                    >
+                      <div>
+                        <p className="font-semibold text-lg text-gray-900">
+                          {" "}
+                          {job.title}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {job.company} · {job.location}
+                        </p>
+                        <br />
+                        <p>
+                          <span className="font-semibold">Type</span> :{" "}
+                          {job.type}
+                        </p>
+                        <p>
+                          <span className="font-semibold">Created on</span> :{" "}
+                          {formatDate(job.createdAt)}
+                        </p>
+                      </div>
+                    </Link>
+                    <button
+                      title="delete"
+                      onClick={() => {
+                        handleDelete(job._id);
+                      }}
+                      className="relative group cursor-pointer mt-2 text-grays-600"
+                    >
+                      <RiDeleteBin6Line className="opacity-100 group-hover:opacity-0 transition-opacity text-xl duration-200" />
+                      <RiDeleteBin6Fill className="absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity text-xl duration-200" />
+                    </button>
+                  </List>
                 ))}
               </motion.div>
             )}

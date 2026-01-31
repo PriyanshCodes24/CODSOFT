@@ -9,6 +9,7 @@ const {
   postJob,
   getMyJobs,
   hasAlreadyApplied,
+  deleteJob,
 } = require("../controllers/jobController");
 
 router.get("/", getJobs);
@@ -18,8 +19,9 @@ router.get(
   "/hasApplied/:jobId",
   protected,
   authorize("applicant"),
-  hasAlreadyApplied
+  hasAlreadyApplied,
 );
 router.post("/", protected, authorize("recruiter", "admin"), postJob);
+router.delete("/:jobId", protected, authorize("recruiter", "admin"), deleteJob);
 
 module.exports = router;

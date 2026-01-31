@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import StatusBadge from "../Components/StatusBadge";
 import { formatDate } from "../Utils/formatDate";
@@ -9,6 +9,7 @@ import BackButton from "../Components/BackButton";
 import Skeleton from "../Components/Skeleton";
 import PageTransition from "../Components/PageTransition";
 import { motion } from "framer-motion";
+import { RiDeleteBin6Fill, RiDeleteBin6Line } from "react-icons/ri";
 
 const RecruiterJobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -16,6 +17,7 @@ const RecruiterJobDetails = () => {
   const [jobLoading, setJobLoading] = useState(false);
   const [applicationsLoading, setApplicationsLoading] = useState(false);
   const params = useParams();
+  const navigate = useNavigate();
 
   const getJobDetails = async () => {
     try {
@@ -59,11 +61,26 @@ const RecruiterJobDetails = () => {
       toast.error(error?.data?.message || `application could not be ${status}`);
     }
   };
+  const handleDelete = async () => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this job permanently",
+    );
+    if (!confirm) return;
+    try {
+      await api.delete(`/jobs/${params.id}`);
+      toast.success("Job deleted successfully");
+      navigate("/recruiter/dashboard");
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.message || "Failed to delete the Job");
+    }
+  };
 
   return (
     <PageTransition>
       <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
         <motion.div className="max-w-4xl mx-auto px-4 py-8">
+          {/* Header */}
           <div className=" flex items-center gap-4 mb-6 ">
             <BackButton />
             <div className="w-full">
@@ -82,15 +99,25 @@ const RecruiterJobDetails = () => {
               )}
             </div>
           </div>
+          {/* job overview */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.25 }}
             className="bg-white border border-gray-200 rounded-lg p-4 mb-8 shadow-sm"
           >
-            <h2 className="text-base font-semibold text-gray-900 mb-2">
-              Job Overview
-            </h2>
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-base font-semibold text-gray-900">
+                Job Overview
+              </h2>
+              <div
+                onClick={handleDelete}
+                className="relative group cursor-pointer"
+              >
+                <RiDeleteBin6Line className="opacity-100 group-hover:opacity-0 transition-opacity text-lg duration-300" />
+                <RiDeleteBin6Fill className="absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity text-grays-600 text-lg duration-300" />
+              </div>
+            </div>
 
             {jobLoading ? (
               <div className="space-y-3">
@@ -124,7 +151,7 @@ const RecruiterJobDetails = () => {
               </div>
             )}
           </motion.div>
-
+          {/* applications */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
