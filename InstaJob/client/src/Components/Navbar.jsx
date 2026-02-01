@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { FaUserPlus, FaUserTie } from "react-icons/fa6";
 import { FiHome, FiBriefcase, FiLogOut, FiPlus, FiGrid } from "react-icons/fi";
+import Navitem from "./Navitem";
 
 const Navbar = () => {
   const location = useLocation();
@@ -29,77 +30,43 @@ const Navbar = () => {
           <div className="sm:block hidden">{capitalize(user?.role) || ""}</div>
         </div>
       )}
-      <div
-        className={`group flex items-center gap-1 transition-all duration-200 cursor-pointer hover:font-semibold ${
-          location.pathname === "/" && "font-semibold"
-        }`}
+      <Navitem
+        icon={FiHome}
+        label="Home"
+        active={location.pathname === "/"}
         onClick={() => navigate("/")}
-      >
-        <FiHome
-          title="home"
-          size={18}
-          className="mx-2 sm:mx-1 md:mx-0 transition-transform duration-200 group-hover:scale-110 text-gray-200 hover:text-white"
-        />
-        <p className="hidden md:block">Home</p>
-      </div>
+      />
       {user?.role === "applicant" && (
-        <div
-          className={`group flex items-center gap-1 transition-all duration-200 cursor-pointer hover:font-semibold ${
-            location.pathname === "/applicant/dashboard" && "font-semibold"
-          }`}
+        <Navitem
+          icon={FiGrid}
+          label="Dashboard"
+          active={location.pathname === "/applicant/dashboard"}
           onClick={() => navigate("/applicant/dashboard")}
-        >
-          <FiGrid
-            title="dashboard"
-            size={18}
-            className="mx-2 sm:mx-1 md:mx-0  transition-transform duration-200 group-hover:scale-110  text-gray-200 hover:text-white"
-          />
-          <p className="hidden md:block">Dashboard</p>
-        </div>
-      )}
-      {user?.role === "recruiter" && (
-        <div
-          className={`group flex items-center gap-1 transition-all duration-200 cursor-pointer hover:font-semibold ${
-            location.pathname === "/recruiter/dashboard" && "font-semibold"
-          }`}
-          onClick={() => navigate("/recruiter/dashboard")}
-        >
-          <FiGrid
-            title="dashboard"
-            size={18}
-            className="mx-2 sm:mx-1 md:mx-0  transition-transform duration-200 group-hover:scale-110  text-gray-200 hover:text-white"
-          />
-          <p className="hidden md:block">Dashboard</p>
-        </div>
-      )}
-      {user?.role === "recruiter" && (
-        <div
-          className={`group flex items-center gap-1 transition-all duration-200 cursor-pointer hover:font-semibold ${
-            location.pathname === "/post" && "font-semibold"
-          }`}
-          onClick={() => navigate("/post")}
-        >
-          <FiPlus
-            title="post"
-            size={20}
-            className="mx-2 sm:mx-1 md:mx-0  transition-transform duration-200 group-hover:scale-110  text-gray-200 hover:text-white"
-          />
-          <p className="hidden md:block">Post</p>
-        </div>
-      )}
-      <div
-        className={`group flex items-center gap-1 transition-all duration-200 cursor-pointer hover:font-semibold ${
-          location.pathname === "/jobs" && "font-semibold"
-        }`}
-        onClick={() => navigate("/jobs")}
-      >
-        <FiBriefcase
-          title="jobs"
-          size={18}
-          className="mx-2 sm:mx-1 md:mx-0  transition-transform duration-200 group-hover:scale-110  text-gray-200 hover:text-white"
         />
-        <p className="hidden md:block">Jobs</p>
-      </div>
+      )}
+      {user?.role === "recruiter" && (
+        <Navitem
+          icon={FiGrid}
+          label="Dashboard"
+          active={location.pathname === "/recruiter/dashboard"}
+          onClick={() => navigate("/recruiter/dashboard")}
+        />
+      )}
+      {user?.role === "recruiter" && (
+        <Navitem
+          icon={FiPlus}
+          size={20}
+          label="Post"
+          active={location.pathname === "/post"}
+          onClick={() => navigate("/post")}
+        />
+      )}
+      <Navitem
+        icon={FiBriefcase}
+        label="Jobs"
+        active={location.pathname === "/jobs"}
+        onClick={() => navigate("/jobs")}
+      />
       {!user && (
         <div
           className={`group flex items-center gap-1 transition-all duration-200 cursor-pointer hover:font-semibold ${
