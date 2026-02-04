@@ -76,12 +76,12 @@ const Jobs = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#F8F9FA] text-gray-700 ">
+      <div className="">
         <div className="max-w-6xl px-4 py-8 mx-auto">
           <h1 className="text-2xl font-bold mb-4">Job Listings</h1>
 
           {/* search filter */}
-          <div className=" sticky top-0 z-50 bg-[#F8F9FA] py-2 shadow-md rounded-md mb-6">
+          <div className=" sticky top-0 z-50 bg-[#F8F9FA] dark:bg-[#020617] py-2 shadow-md rounded-md mb-6">
             <form
               className="flex flex-wrap sm:flex-nowrap gap-2 px-2 items-stretch"
               onSubmit={handleSubmit}
@@ -148,9 +148,9 @@ const Jobs = () => {
               jobList.map((job) => (
                 <Link to={`/jobs/${job._id}`} key={job._id}>
                   <List>
-                    <p className="font-semibold text-gray-900 text-lg">
+                    <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
                       {job?.title}
-                    </p>
+                    </h2>
                     <p className="text-sm text-gray-500">
                       {job?.company} · {job?.location}
                     </p>

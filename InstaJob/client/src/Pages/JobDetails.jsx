@@ -90,8 +90,8 @@ const JobDetails = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#F8F9FA] text-gray-700 px-2 py-8 md:py-30">
-        <motion.div className="bg-white border border-gray-200 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-5xl mx-auto py-10">
+      <div className="min-h-screen px-2 py-8 md:py-30">
+        <motion.div className="bg-white dark:bg-[#020617] border border-gray-200 dark:border-gray-800 shadow-lg rounded-lg p-6 md:p-8 w-full max-w-5xl mx-auto py-10">
           <BackButton />
           <div className="flex flex-col px-4 py-8">
             <>
@@ -112,7 +112,7 @@ const JobDetails = () => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.2, delay: 0.05 }}
                 >
-                  <h3 className="text-3xl font-semibold text-gray-900">
+                  <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
                     {jobDetails?.title}
                   </h3>
                   <p className=" mb-6 text-sm text-gray-500">
@@ -146,7 +146,7 @@ const JobDetails = () => {
 
               {user?.role === "applicant" && !hasApplied && (
                 <label className="block mt-5">
-                  <span className="text-sm font-medium text-gray-700">
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-400">
                     Resume (PDF only)
                   </span>
 

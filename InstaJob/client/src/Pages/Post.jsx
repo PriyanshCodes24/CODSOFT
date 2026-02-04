@@ -60,57 +60,61 @@ const Post = () => {
     }
   };
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#F8F9FA] text-gray-700 px-4">
-      <div className="w-full max-w-md bg-white border border-gray-200 shadow-lg rounded-lg p-6">
+    <div className="flex items-center justify-center min-h-screen px-4">
+      <div className="w-full max-w-md bg-white dark:bg-[#020617] border border-gray-200 dark:border-white/10 shadow-lg rounded-lg p-6">
         <BackButton />
         <h1 className="font-bold text-2xl m-4 text-center">Post a Job</h1>
         <form className="space-y-4 " onSubmit={handleSubmit}>
           <div>
-            <label className="text-sm text-gray-700 font-medium">Title: </label>
+            <label className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+              Title:{" "}
+            </label>
             <input
               value={title}
               placeholder="Frontend Developer"
               type="text"
-              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1"
+              className="w-full focus:outline-none focus:ring-1 focus:ring-[#22333B] rounded-md p-2 text-sm mt-1 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               onChange={handleTitleChange}
             />
           </div>
           <div>
-            <label className="text-sm text-gray-700 font-medium">
+            <label className="text-sm text-gray-700 font-medium dark:text-gray-300">
               Location:{" "}
             </label>
             <input
               value={location}
               placeholder="Remote / Bangalore"
               type="text"
-              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1"
+              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1 border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               onChange={handleLocationChange}
             />
           </div>
           <div>
-            <label className="text-sm text-gray-700 font-medium">
+            <label className="text-sm text-gray-700 font-medium dark:text-gray-300">
               Company:{" "}
             </label>
             <input
               value={company}
               placeholder="InstaJob"
               type="text"
-              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1"
+              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1 border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               onChange={handleCompanyChange}
             />
           </div>
           <div>
-            <label className="text-sm text-gray-700 font-medium">Type: </label>
+            <label className="text-sm text-gray-700 font-medium dark:text-gray-300">
+              Type:{" "}
+            </label>
             <select
               value={type}
               placeholder="type"
               type="dropdown"
-              className="w-full border rounded-md p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#22333B] mt-1"
+              className="w-full border rounded-md p-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#22333B] mt-1  border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               onChange={handleTypeChange}
             >
               {typeOptions.map((option) => (
                 <option
-                  className=""
+                  className="bg-white dark:bg-[#020617]"
                   key={option}
                   label={option}
                   value={option}
@@ -119,7 +123,7 @@ const Post = () => {
             </select>
           </div>
           <div>
-            <label className="text-sm text-gray-700 font-medium">
+            <label className="text-sm text-gray-700 font-medium dark:text-gray-300">
               Description:{" "}
             </label>
             <textarea
@@ -127,7 +131,7 @@ const Post = () => {
               placeholder="description"
               rows={4}
               type="text"
-              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1"
+              className="w-full border focus:outline-none rounded-md p-2 text-sm focus:ring-1 focus:ring-[#22333B] mt-1 border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               onChange={handleDescriptionChange}
             />
           </div>

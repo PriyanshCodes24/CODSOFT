@@ -4,6 +4,7 @@ import { FaUserPlus, FaUserTie } from "react-icons/fa6";
 import { FiHome, FiBriefcase, FiLogOut, FiPlus, FiGrid } from "react-icons/fi";
 import Navitem from "./Navitem";
 import { motion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const location = useLocation();
@@ -18,7 +19,7 @@ const Navbar = () => {
   return (
     <motion.div
       layout
-      className="flex justify-end bg-[#22333B] text-white gap-2 sm:gap-4 md:gap-6 p-4"
+      className="flex justify-end bg-[#22333B] dark:bg-[#020617] text-white gap-2 sm:gap-4 md:gap-6 p-4"
     >
       {user && (
         <div className={`flex mr-auto gap-1 items-center `}>
@@ -33,7 +34,7 @@ const Navbar = () => {
         </div>
       )}
       <Navitem
-        title="home"
+        title="Home"
         icon={FiHome}
         label="Home"
         active={location.pathname === "/"}
@@ -41,7 +42,7 @@ const Navbar = () => {
       />
       {user?.role === "applicant" && (
         <Navitem
-          title="dashboard"
+          title="Dashboard"
           icon={FiGrid}
           label="Dashboard"
           active={location.pathname === "/applicant/dashboard"}
@@ -50,7 +51,7 @@ const Navbar = () => {
       )}
       {user?.role === "recruiter" && (
         <Navitem
-          title="dashboard"
+          title="Dashboard"
           icon={FiGrid}
           label="Dashboard"
           active={location.pathname === "/recruiter/dashboard"}
@@ -59,7 +60,7 @@ const Navbar = () => {
       )}
       {user?.role === "recruiter" && (
         <Navitem
-          title="post"
+          title="Post"
           icon={FiPlus}
           size={20}
           label="Post"
@@ -68,7 +69,7 @@ const Navbar = () => {
         />
       )}
       <Navitem
-        title="jobs"
+        title="Jobs"
         icon={FiBriefcase}
         label="Jobs"
         active={location.pathname.startsWith("/jobs")}
@@ -98,9 +99,10 @@ const Navbar = () => {
           Register
         </motion.div>
       )}
+      <ThemeToggle />
       {user && (
         <Navitem
-          title="logout"
+          title="Logout"
           icon={FiLogOut}
           label="Logout"
           active={false}
