@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-const NavItem = ({ icon: Icon, label, active, title, onClick, size = 18 }) => {
+const Navitem = ({ icon: Icon, label, active, title, onClick, size = 18 }) => {
   return (
     <motion.div
       layout
@@ -25,4 +25,4 @@ const NavItem = ({ icon: Icon, label, active, title, onClick, size = 18 }) => {
   );
 };
 
-export default NavItem;
+export default Navitem;

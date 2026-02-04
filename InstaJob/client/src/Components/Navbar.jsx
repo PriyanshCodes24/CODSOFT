@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { FaUserPlus, FaUserTie } from "react-icons/fa6";
 import { FiHome, FiBriefcase, FiLogOut, FiPlus, FiGrid } from "react-icons/fi";
-import NavItem from "./NavItem";
+import Navitem from "./Navitem";
 import { motion } from "framer-motion";
 
 const Navbar = () => {
@@ -32,7 +32,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-      <NavItem
+      <Navitem
         title="home"
         icon={FiHome}
         label="Home"
@@ -40,7 +40,7 @@ const Navbar = () => {
         onClick={() => navigate("/")}
       />
       {user?.role === "applicant" && (
-        <NavItem
+        <Navitem
           title="dashboard"
           icon={FiGrid}
           label="Dashboard"
@@ -49,7 +49,7 @@ const Navbar = () => {
         />
       )}
       {user?.role === "recruiter" && (
-        <NavItem
+        <Navitem
           title="dashboard"
           icon={FiGrid}
           label="Dashboard"
@@ -58,7 +58,7 @@ const Navbar = () => {
         />
       )}
       {user?.role === "recruiter" && (
-        <NavItem
+        <Navitem
           title="post"
           icon={FiPlus}
           size={20}
@@ -67,7 +67,7 @@ const Navbar = () => {
           onClick={() => navigate("/post")}
         />
       )}
-      <NavItem
+      <Navitem
         title="jobs"
         icon={FiBriefcase}
         label="Jobs"
@@ -99,7 +99,7 @@ const Navbar = () => {
         </motion.div>
       )}
       {user && (
-        <NavItem
+        <Navitem
           title="logout"
           icon={FiLogOut}
           label="Logout"
