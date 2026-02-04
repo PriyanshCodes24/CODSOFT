@@ -33,6 +33,7 @@ const Navbar = () => {
         </div>
       )}
       <NavItem
+        title="home"
         icon={FiHome}
         label="Home"
         active={location.pathname === "/"}
@@ -40,6 +41,7 @@ const Navbar = () => {
       />
       {user?.role === "applicant" && (
         <NavItem
+          title="dashboard"
           icon={FiGrid}
           label="Dashboard"
           active={location.pathname === "/applicant/dashboard"}
@@ -48,6 +50,7 @@ const Navbar = () => {
       )}
       {user?.role === "recruiter" && (
         <NavItem
+          title="dashboard"
           icon={FiGrid}
           label="Dashboard"
           active={location.pathname === "/recruiter/dashboard"}
@@ -56,6 +59,7 @@ const Navbar = () => {
       )}
       {user?.role === "recruiter" && (
         <NavItem
+          title="post"
           icon={FiPlus}
           size={20}
           label="Post"
@@ -64,6 +68,7 @@ const Navbar = () => {
         />
       )}
       <NavItem
+        title="jobs"
         icon={FiBriefcase}
         label="Jobs"
         active={location.pathname.startsWith("/jobs")}
@@ -95,6 +100,7 @@ const Navbar = () => {
       )}
       {user && (
         <NavItem
+          title="logout"
           icon={FiLogOut}
           label="Logout"
           active={false}

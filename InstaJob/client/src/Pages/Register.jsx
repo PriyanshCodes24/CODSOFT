@@ -7,7 +7,6 @@ import { buttonUi } from "../Utils/uiClasses";
 import PageTransition from "../Components/PageTransition";
 
 const Register = () => {
-  const API = import.meta.env.VITE_API;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
