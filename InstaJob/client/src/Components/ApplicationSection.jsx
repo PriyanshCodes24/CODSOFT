@@ -7,7 +7,7 @@ const ApplicationSection = ({ title, items }) => {
   if (items.length === 0) return null;
   return (
     <div className="mb-8">
-      <h2 className="font-semibold text-lg mb-3 text-gray-900">
+      <h2 className="font-semibold text-lg mb-3 text-gray-800 dark:text-gray-200">
         {title} ({items.length})
       </h2>
       <div className="grid grid-cols-1 gap-4">
@@ -16,15 +16,15 @@ const ApplicationSection = ({ title, items }) => {
             return null;
           }
           return (
-            <Link to={`/jobs/${application.job._id}`} key={application._id}>
-              <List>
-                <h3 className="font-semibold text-gray-900 text-lg">
+            <List key={application._id}>
+              <Link to={`/jobs/${application.job._id}`}>
+                <h3 className="font-semibold text-gray-800 dark:text-gray-200 text-lg">
                   {application?.job?.title}
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   {application?.job?.company} · {application?.job?.location}
                 </p>
-                <div className="mt-4 text-sm">
+                <div className="mt-4 text-sm space-y-1">
                   <p>
                     <span className="font-semibold">Applied on</span> :{" "}
                     {formatDate(application?.createdAt)}
@@ -34,8 +34,8 @@ const ApplicationSection = ({ title, items }) => {
                     <StatusBadge status={application.status} />
                   </p>
                 </div>
-              </List>
-            </Link>
+              </Link>
+            </List>
           );
         })}
       </div>

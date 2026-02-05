@@ -48,7 +48,7 @@ const RecruiterDashboard = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#020617]">
+      <div className="min-h-screen">
         <div className="max-w-4xl px-4 py-8 mx-auto">
           <div className="text-center mb-8 ">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">

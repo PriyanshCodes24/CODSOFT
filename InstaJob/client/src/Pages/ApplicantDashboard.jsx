@@ -41,14 +41,14 @@ const ApplicantDashboard = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen text-gray-700">
+      <div className="min-h-screen">
         <div className="max-w-4xl px-4 py-8 mx-auto">
           {/* header */}
           <div className="text-center mb-8">
-            <h1 className="text-gray-900 text-3xl font-bold">
+            <h1 className="text-gray-900 dark:text-gray-100 text-3xl font-bold">
               My Applications
             </h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               Track the status of jobs you've applied to.
             </p>
           </div>
