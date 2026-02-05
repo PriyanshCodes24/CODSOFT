@@ -10,7 +10,6 @@ import List from "../Components/List";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiDeleteBin6Fill, RiDeleteBin6Line } from "react-icons/ri";
 import toast from "react-hot-toast";
-import { MdGridOff } from "react-icons/md";
 import { TbBriefcaseOff } from "react-icons/tb";
 
 const RecruiterDashboard = () => {
@@ -49,11 +48,13 @@ const RecruiterDashboard = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen text-gray-700">
+      <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#020617]">
         <div className="max-w-4xl px-4 py-8 mx-auto">
           <div className="text-center mb-8 ">
-            <h1 className="text-3xl font-bold text-gray-900">Jobs Posted</h1>
-            <p className="text-gray-500 text-sm mt-1">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+              Jobs Posted
+            </h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
               Track the jobs you've posted
             </p>
           </div>
@@ -89,18 +90,17 @@ const RecruiterDashboard = () => {
                 className="grid grid-cols-1 gap-4"
               >
                 {jobs.map((job) => (
-                  <List className="flex justify-between items-start">
-                    <Link
-                      className="flex-1"
-                      to={`/recruiter/jobs/${job._id}`}
-                      key={job._id}
-                    >
+                  <List
+                    key={job._id}
+                    className="flex justify-between items-start"
+                  >
+                    <Link to={`/recruiter/jobs/${job._id}`} key={job._id}>
                       <div>
-                        <p className="font-semibold text-lg text-gray-900">
+                        <h2 className="font-semibold text-lg text-gray-900 dark:text-gray-100">
                           {" "}
                           {job.title}
-                        </p>
-                        <p className="text-sm text-gray-500">
+                        </h2>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
                           {job.company} · {job.location}
                         </p>
                         <br />
@@ -116,10 +116,11 @@ const RecruiterDashboard = () => {
                     </Link>
                     <button
                       title="delete"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         handleDelete(job._id);
                       }}
-                      className="relative group cursor-pointer mt-2 text-grays-600"
+                      className="relative group cursor-pointer mt-2 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"
                     >
                       <RiDeleteBin6Line className="opacity-100 group-hover:opacity-0 transition-opacity text-xl duration-200" />
                       <RiDeleteBin6Fill className="absolute top-0 opacity-0 group-hover:opacity-100 transition-opacity text-xl duration-200" />
