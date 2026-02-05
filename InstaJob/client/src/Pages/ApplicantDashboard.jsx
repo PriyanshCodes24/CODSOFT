@@ -6,6 +6,7 @@ import Skeleton from "../Components/Skeleton";
 import EmptyState from "../Components/EmptyState";
 import PageTransition from "../Components/PageTransition";
 import ApplicationSection from "../Components/ApplicationSection";
+import { TbInboxOff } from "react-icons/tb";
 
 const ApplicantDashboard = () => {
   const [applications, setApplications] = useState([]);
@@ -40,7 +41,7 @@ const ApplicantDashboard = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
+      <div className="min-h-screen text-gray-700">
         <div className="max-w-4xl px-4 py-8 mx-auto">
           {/* header */}
           <div className="text-center mb-8">
@@ -66,6 +67,7 @@ const ApplicantDashboard = () => {
             </div>
           ) : applications.length === 0 ? (
             <EmptyState
+              icon={TbInboxOff}
               title="No applications yet"
               description="Once you apply to jobs, they'll appear here."
               action={

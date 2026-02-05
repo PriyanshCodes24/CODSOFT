@@ -11,6 +11,8 @@ import EmptyState from "../Components/EmptyState";
 import PageTransition from "../Components/PageTransition";
 import List from "../Components/List";
 import { motion } from "framer-motion";
+import { FiBriefcase } from "react-icons/fi";
+import { TbBriefcaseOff } from "react-icons/tb";
 
 const Jobs = () => {
   const [jobList, setJobList] = useState([]);
@@ -76,12 +78,12 @@ const Jobs = () => {
 
   return (
     <PageTransition>
-      <div className="">
+      <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#020617]">
         <div className="max-w-6xl px-4 py-8 mx-auto">
           <h1 className="text-2xl font-bold mb-4">Job Listings</h1>
 
           {/* search filter */}
-          <div className=" sticky top-0 z-50 bg-[#F8F9FA] dark:bg-[#020617] py-2 shadow-md rounded-md mb-6">
+          <div className=" sticky top-0 z-50 bg-[#F8F9FA] dark:bg-[#020617] py-2  mb-6 border border-gray-200 dark:border-white/10 shadow-sm backdrop-blur supports-backdrop-filter:bg-white/10 dark:supports-backdrop-filter:bg-[#020617]/80">
             <form
               className="flex flex-wrap sm:flex-nowrap gap-2 px-2 items-stretch"
               onSubmit={handleSubmit}
@@ -91,7 +93,7 @@ const Jobs = () => {
                 type="text"
                 aria-label="Job Title"
                 name="q"
-                className="focus:outline-none border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 flex-1 min-w-0 w-full"
+                className="w-full rounded-md p-2 text-sm sm:text-lg h-10 sm:h-12 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-[#22333B]"
                 placeholder="Job Title"
                 value={title}
                 onChange={handleTitle}
@@ -101,7 +103,7 @@ const Jobs = () => {
                 type="text"
                 aria-label="Job Location"
                 name="loc"
-                className="focus:outline-none border rounded-md text-sm sm:text-lg p-2 h-10 sm:h-12 w-full sm:w-40"
+                className="w-full sm:w-40 rounded-md p-2 text-sm sm:text-lg h-10 sm:h-12 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-[#22333B]"
                 placeholder="Job Location"
                 value={location}
                 onChange={handleLocation}
@@ -111,7 +113,7 @@ const Jobs = () => {
                 whileTap={{ scale: 0.99 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 aria-label="Search"
-                className={`w-full ${buttonUi} h-10 sm:h-12 sm:w-12 flex items-center justify-center sm:ml-0 ${
+                className={`w-full ${buttonUi} h-10 sm:h-12 sm:w-20 flex items-center justify-center sm:ml-0 ${
                   searchLoading ? "opacity-60" : "cursor-pointer"
                 }`}
                 type="submit"
@@ -136,6 +138,7 @@ const Jobs = () => {
               </div>
             ) : jobList.length === 0 ? (
               <EmptyState
+                icon={TbBriefcaseOff}
                 title="No jobs found"
                 description="Try changing keywords or removing filters"
                 action={
@@ -151,7 +154,7 @@ const Jobs = () => {
                     <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
                       {job?.title}
                     </h2>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       {job?.company} · {job?.location}
                     </p>
                     <br />

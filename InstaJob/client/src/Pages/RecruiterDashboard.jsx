@@ -10,6 +10,8 @@ import List from "../Components/List";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiDeleteBin6Fill, RiDeleteBin6Line } from "react-icons/ri";
 import toast from "react-hot-toast";
+import { MdGridOff } from "react-icons/md";
+import { TbBriefcaseOff } from "react-icons/tb";
 
 const RecruiterDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +49,7 @@ const RecruiterDashboard = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-[#F8F9FA] text-gray-700">
+      <div className="min-h-screen text-gray-700">
         <div className="max-w-4xl px-4 py-8 mx-auto">
           <div className="text-center mb-8 ">
             <h1 className="text-3xl font-bold text-gray-900">Jobs Posted</h1>
@@ -69,6 +71,7 @@ const RecruiterDashboard = () => {
               </div>
             ) : jobs.length === 0 ? (
               <EmptyState
+                icon={TbBriefcaseOff}
                 title="No jobs posted yet!"
                 description="Once you post jobs, thehy will appear here"
                 action={
