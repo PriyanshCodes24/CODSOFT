@@ -10,6 +10,8 @@ import BackButton from "../Components/BackButton";
 import Loader from "../Components/Loader";
 import Skeleton from "../Components/Skeleton";
 import PageTransition from "../Components/PageTransition";
+import { MdOutlineFileUpload } from "react-icons/md";
+import { FaFilePdf } from "react-icons/fa";
 
 const JobDetails = () => {
   const [jobDetails, setJobDetails] = useState(null);
@@ -127,8 +129,12 @@ const JobDetails = () => {
                       {jobDetails.company}
                     </li>
                     <li>
-                      <span className="font-bold">Description :</span>{" "}
-                      {jobDetails.description}
+                      <span className="font-bold block mb-1">
+                        Description :
+                      </span>{" "}
+                      <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                        {jobDetails.description}
+                      </p>
                     </li>
                     <li>
                       <span className="font-bold">Type :</span>{" "}
@@ -142,45 +148,49 @@ const JobDetails = () => {
                 </motion.div>
               )}
 
+              <hr className="my-6 border-gray-200 dark:border-gray-800" />
+
               {/* Resume upload */}
 
               {user?.role === "applicant" && !hasApplied && (
-                <label className="block mt-5">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-400">
+                <div className="mt-8">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">
                     Resume (PDF only)
-                  </span>
-
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.2, delay: 0.05 }}
-                    className="mt-2 flex items-center justify-center w-full"
+                  </label>
+                  <motion.label
+                    whileHover={{ scale: 1.01 }}
+                    whileTap={{ scale: 0.99 }}
+                    htmlFor="resume"
+                    className={`relative w-full h-36 flex flex-col justify-center items-center rounded-lg cursor-pointer border-2 border-dashed transition 
+                      ${resume ? "border-green-400 bg-green-50 dark:bg-green-950/40" : "border-gray-300 dark:border-gray-700  bg-gray-50 dark:bg-gray-950/30 hover:bg-gray-100 dark:hover:bg-gray-900"}
+                      `}
                   >
-                    <label
-                      htmlFor="resume"
-                      className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed  rounded-lg cursor-pointer  transition
-                          ${resume ? "border-green-400 bg-green-50 " : "border-gray-300 bg-gray-50 hover:bg-gray-100"}
-                        `}
-                    >
-                      <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <p className="text-sm text-gray-600">
-                          {resume ? resume.name : "Click to upload your resume"}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-1">
-                          PDF only · Max 2MB
-                        </p>
+                    <div className="flex flex-col items-center text-center px-4">
+                      <div className={`mb-2`}>
+                        {resume ? (
+                          <FaFilePdf size={18} />
+                        ) : (
+                          <MdOutlineFileUpload size={18} />
+                        )}
                       </div>
 
-                      <input
-                        id="resume"
-                        type="file"
-                        accept=".pdf"
-                        className="hidden"
-                        onChange={handleResumeChange}
-                      />
-                    </label>
-                  </motion.div>
-                </label>
+                      <p className="text-sm font-medium">
+                        {resume ? resume.name : "Click to upload your resume"}
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1 ">
+                        PDF only · Max 2MB
+                      </p>
+                    </div>
+
+                    <input
+                      id="resume"
+                      type="file"
+                      accept=".pdf"
+                      className="hidden"
+                      onChange={handleResumeChange}
+                    />
+                  </motion.label>
+                </div>
               )}
 
               {/* apply button */}
@@ -188,7 +198,9 @@ const JobDetails = () => {
               {user?.role === "applicant" && (
                 <div className="flex justify-center mt-4">
                   {hasApplied ? (
-                    <p className="text-green-600 mt-4">Application submitted</p>
+                    <p className="text-green-600 mt-4 text-sm font-medium">
+                      ✓ Application submitted
+                    </p>
                   ) : (
                     <motion.button
                       whileHover={{ scale: 1.02 }}
