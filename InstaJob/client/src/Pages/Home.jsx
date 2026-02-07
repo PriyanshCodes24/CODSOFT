@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import HomeHero from "../Components/HomeHero";
 import PageTransition from "../Components/PageTransition";
 import { motion } from "framer-motion";
+import { buttonUi } from "../Utils/uiClasses";
 
 const Home = () => {
   const categories = [
@@ -28,7 +29,7 @@ const Home = () => {
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
               key={cat.id}
               onClick={() => go(cat.label)}
-              className="flex justify-center items-center bg-[#22333B] hover:bg-[#2C3E46] text-white rounded-lg p-6 cursor-pointer gap-2 hover:shadow-lg transition-colors  duration-200 font-medium text-lg"
+              className={` ${buttonUi} h-15 text-lg font-medium flex items-center justify-center`}
             >
               {cat.label}
             </motion.button>

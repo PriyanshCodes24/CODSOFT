@@ -80,7 +80,9 @@ const Jobs = () => {
     <PageTransition>
       <div className="min-h-screen bg-[#F8F9FA] dark:bg-[#020617]">
         <div className="max-w-6xl px-4 py-8 mx-auto">
-          <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Job Listings</h1>
+          <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+            Job Listings
+          </h1>
 
           {/* search filter */}
           <div className=" sticky top-0 z-50 bg-[#F8F9FA] dark:bg-[#020617] py-2  mb-6 border border-gray-200 dark:border-white/10 shadow-sm backdrop-blur supports-backdrop-filter:bg-white/10 dark:supports-backdrop-filter:bg-[#020617]/80">

@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <motion.div
       layout
-      className="flex justify-end bg-[#22333B] dark:bg-[#020617] text-white gap-2 sm:gap-4 md:gap-6 p-4"
+      className="flex justify-end bg-[#22333B] dark:bg-[#020617] text-white gap-2 sm:gap-4 md:gap-6 p-4 dark:border-b border-white/10"
     >
       {user && (
         <div className={`flex mr-auto gap-1 items-center `}>
