@@ -53,37 +53,47 @@ const Login = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] px-4">
-        <div className="w-full max-w-md shadow-lg p-6 rounded-lg bg-white border border-gray-200">
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="w-full max-w-md shadow-lg p-6 rounded-lg bg-white dark:bg-[#020617] border border-gray-200 dark:border-gray-800">
           <h1 className="font-bold text-2xl text-center">Welcome back</h1>
-          <p className="text-center text-gray-500 text-sm mt-1">
-            Login to continue to your account
+          <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-1">
+            Log in to continue to your account
           </p>
 
           <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Email:
               </label>
               <input
+                id="email"
                 placeholder="example@gmail.com"
                 value={email}
                 onChange={handleEmailChange}
                 type="email"
+                autoComplete="email"
                 autoFocus
-                className="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#22333B] text-sm"
+                className="w-full focus:outline-none focus:ring-1 focus:ring-[#22333B] rounded-md p-2 text-sm mt-1 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               />
             </div>
             <div>
-              <label className="text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Password:
               </label>
               <input
+                id="password"
                 placeholder="••••••••"
                 value={password}
                 onChange={handlePasswordChange}
                 type="password"
-                className="mt-1 w-full border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#22333B] text-sm"
+                autoComplete="current-password"
+                className="w-full focus:outline-none focus:ring-1 focus:ring-[#22333B] rounded-md p-2 text-sm mt-1 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               />
             </div>
 
@@ -95,12 +105,12 @@ const Login = () => {
               }`}
             >
               {isLoading && <Loader />}
-              {isLoading ? "Logging in" : "Login"}
+              {isLoading ? "Logging in..." : "Login"}
             </button>
           </form>
           <div className="text-center">
             <Link
-              className="text-gray-500 hover:text-gray-700 hover:border-b text-sm"
+              className="text-gray-500 dark:text-gray-400 hover:text-gray-700 hover:dark:text-gray-300 hover:border-b text-sm"
               to="/register"
             >
               Don't have an account? Register

@@ -56,28 +56,37 @@ const Register = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen flex items-center justify-center bg-[#F8F9FA] px-4">
-        <div className="max-w-md w-full border border-gray-200 shadow-lg p-6 rounded-lg bg-white">
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="max-w-md w-full shadow-lg p-6 rounded-lg bg-white dark:bg-[#020617] border border-gray-200 dark:border-gray-800">
           <h1 className="font-bold text-2xl text-center">Register</h1>
-          <p className="text-center text-gray-500 text-sm mt-1">
+          <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-1">
             Create your account
           </p>
 
           <form className="space-y-4 mt-6" onSubmit={handleSubmit}>
             <div>
-              <label className="text-sm text-gray-700 font-medium">Name:</label>
+              <label
+                htmlFor="name"
+                className="text-sm text-gray-700 dark:text-gray-300 font-medium"
+              >
+                Name:
+              </label>
               <input
                 placeholder="John Doe"
                 value={name}
                 onChange={handleNameChange}
                 type="text"
                 id="name"
+                autoComplete="name"
                 autoFocus
-                className="w-full border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#22333B] mt-1 text-sm"
+                className="w-full focus:outline-none focus:ring-1 focus:ring-[#22333B] rounded-md p-2 text-sm mt-1 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               />
             </div>
             <div>
-              <label className="text-sm text-gray-700 font-medium">
+              <label
+                htmlFor="email"
+                className="text-sm text-gray-700 dark:text-gray-300 font-medium"
+              >
                 Email:
               </label>
               <input
@@ -85,12 +94,16 @@ const Register = () => {
                 value={email}
                 onChange={handleEmailChange}
                 type="email"
+                autoComplete="email"
                 id="email"
-                className="w-full border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#22333B] mt-1 text-sm"
+                className="w-full focus:outline-none focus:ring-1 focus:ring-[#22333B] rounded-md p-2 text-sm mt-1 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               />
             </div>
             <div>
-              <label className="text-sm text-gray-700 font-medium">
+              <label
+                htmlFor="password"
+                className="text-sm text-gray-700 dark:text-gray-300 font-medium"
+              >
                 Password:
               </label>
               <input
@@ -98,8 +111,9 @@ const Register = () => {
                 value={password}
                 onChange={handlePasswordChange}
                 type="password"
+                autoComplete="current-password"
                 id="password"
-                className="w-full border rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-[#22333B] mt-1 text-sm"
+                className="w-full focus:outline-none focus:ring-1 focus:ring-[#22333B] rounded-md p-2 text-sm mt-1 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
               />
             </div>
 
@@ -116,7 +130,7 @@ const Register = () => {
           </form>
           <div className="text-center">
             <Link
-              className="text-gray-500 hover:text-gray-700 hover:border-b text-sm"
+              className="text-gray-500 dark:text-gray-400 hover:text-gray-700 hover:dark:text-gray-300 hover:border-b text-sm"
               to="/login"
             >
               Already have an account? Login

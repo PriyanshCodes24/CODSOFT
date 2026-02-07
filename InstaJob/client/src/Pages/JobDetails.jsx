@@ -188,7 +188,7 @@ const JobDetails = () => {
 
               <hr className="my-6 border-gray-200 dark:border-gray-800" />
 
-              {user.role !== "applicant" && (
+              {user?.role !== "applicant" && (
                 <p className="text-center mt-8 text-red-500 dark:text-red-600">
                   Only applicants can apply.
                 </p>
