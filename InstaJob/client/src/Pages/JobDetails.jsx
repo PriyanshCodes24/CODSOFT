@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api/axios";
 import toast from "react-hot-toast";
@@ -21,6 +21,9 @@ const JobDetails = () => {
   const { user } = useAuth();
   const [hasApplied, setHasApplied] = useState(false);
   const [resume, setResume] = useState(null);
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const getJobDetails = async () => {
     try {
@@ -57,9 +60,15 @@ const JobDetails = () => {
     if (!file) return;
 
     if (file.type !== "application/pdf") {
-      toast.error("Only PDF resumes are allowed");
+      setError("Only PDF resumes are allowed.");
+      // toast.error("Only PDF resumes are allowed");
       return;
     }
+    if (file.size > 2 * 1024 * 1024) {
+      setError("File size is too large. Maximum size is 2MB.");
+      return;
+    }
+    setError(null);
 
     setResume(file);
   };
@@ -88,6 +97,35 @@ const JobDetails = () => {
     } finally {
       setApplyLoading(false);
     }
+  };
+
+  const handleRemoveResume = (e) => {
+    e.preventDefault();
+    setResume(null);
+    setError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      setError("Only PDF resumes are allowed.");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setError("File size is too large. Maximum size is 2MB.");
+      return;
+    }
+
+    setError(null);
+    setResume(file);
   };
 
   return (
@@ -150,6 +188,11 @@ const JobDetails = () => {
 
               <hr className="my-6 border-gray-200 dark:border-gray-800" />
 
+              {user.role !== "applicant" && (
+                <p className="text-center mt-8 text-red-500 dark:text-red-600">
+                  Only applicants can apply.
+                </p>
+              )}
               {/* Resume upload */}
 
               {user?.role === "applicant" && !hasApplied && (
@@ -161,8 +204,14 @@ const JobDetails = () => {
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
                     htmlFor="resume"
+                    onDrop={handleDrop}
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      setIsDragging(true);
+                    }}
+                    onDragLeave={() => setIsDragging(false)}
                     className={`relative w-full h-36 flex flex-col justify-center items-center rounded-lg cursor-pointer border-2 border-dashed transition 
-                      ${resume ? "border-green-400 bg-green-50 dark:bg-green-950/40" : "border-gray-300 dark:border-gray-700  bg-gray-50 dark:bg-gray-950/30 hover:bg-gray-100 dark:hover:bg-gray-900"}
+                      ${isDragging ? "border-blue-400 bg-blue-50 dark:bg-blue-900/30" : resume ? "border-green-400 bg-green-50 dark:bg-green-950/40" : "border-gray-300 dark:border-gray-700  bg-gray-50 dark:bg-gray-950/30 hover:bg-gray-100 dark:hover:bg-gray-900"}
                       `}
                   >
                     <div className="flex flex-col items-center text-center px-4">
@@ -175,21 +224,41 @@ const JobDetails = () => {
                       </div>
 
                       <p className="text-sm font-medium">
-                        {resume ? resume.name : "Click to upload your resume"}
+                        {isDragging
+                          ? "Drop your resume here"
+                          : resume
+                            ? resume.name
+                            : "Click or drag to upload your resume"}
                       </p>
                       <p className="text-xs text-gray-400 mt-1 ">
-                        PDF only · Max 2MB
+                        {resume
+                          ? (resume?.size / (1024 * 1024)).toFixed(1) + " MB"
+                          : "PDF only · Max 2MB"}
                       </p>
                     </div>
 
                     <input
                       id="resume"
+                      ref={fileInputRef}
                       type="file"
                       accept=".pdf"
                       className="hidden"
                       onChange={handleResumeChange}
                     />
+                    {resume && (
+                      <button
+                        onClick={handleRemoveResume}
+                        className="text-xs text-gray-600 dark:text-gray-300 mt-3 hover:text-gray-800 dark:hover:text-gray-100 hover:underline hover:underline-offset-2 cursor-pointer"
+                      >
+                        Remove
+                      </button>
+                    )}
                   </motion.label>
+                  {error && (
+                    <div className="text-center mt-2 text-sm text-red-600 bg-red-100 dark:bg-red-900/30 rounded-md px-3 py-1">
+                      {error}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -198,7 +267,7 @@ const JobDetails = () => {
               {user?.role === "applicant" && (
                 <div className="flex justify-center mt-4">
                   {hasApplied ? (
-                    <p className="text-green-600 mt-4 text-sm font-medium">
+                    <p className="text-green-600 mt-8 text-sm font-medium">
                       ✓ Application submitted
                     </p>
                   ) : (
